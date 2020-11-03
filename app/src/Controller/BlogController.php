@@ -23,7 +23,7 @@ class BlogController extends AbstractController
     /**
      * @Route("/{page}", name="blog_list", defaults={"page": 1}, requirements={"page"="\d+"})
      */
-    public function blogList($page, Request $request)
+    public function blogList($page = 1, Request $request)
     {
         $limit = $request->get('limit', '10');
         $repository = $this->getDoctrine()->getRepository(BlogPost::class);
@@ -34,7 +34,7 @@ class BlogController extends AbstractController
                 'page' => $page,
                 'limit' => $limit,
                 'data' => array_map(function (BlogPost $item) {
-                    return $this->generateUrl('blog_by_slug', ['slug' => $item['slug']]);
+                    return $this->generateUrl('blog_by_slug', ['slug' => $item->getSlug()]);
                 }, $items)
             ]
         );
