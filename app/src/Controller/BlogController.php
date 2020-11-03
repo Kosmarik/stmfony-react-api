@@ -3,9 +3,15 @@
 namespace App\Controller;
 
 
+use App\Entity\BlogPost;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\MakerBundle\Maker\MakeSerializerEncoder;
+use Symfony\Bundle\MakerBundle\Maker\MakeSerializerNormalizer;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Flex\Response;
 
 /**
  * Class BlogController
@@ -14,59 +20,70 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BlogController extends AbstractController
 {
-    const POSTS = [
-        [
-            'id' => 1,
-            'slug' => 'hello-word',
-            'title' => 'Hello world!'
-        ],
-        [
-            'id' => 2,
-            'slug' => 'another-post',
-            'title' => 'This is another post!'
-        ],
-        [
-            'id' => 3,
-            'slug' => 'last-example',
-            'title' => 'This is last example!'
-        ]
-    ];
-
     /**
      * @Route("/{page}", name="blog_list", defaults={"page": 1}, requirements={"page"="\d+"})
      */
     public function blogList($page, Request $request)
     {
         $limit = $request->get('limit', '10');
+        $repository = $this->getDoctrine()->getRepository(BlogPost::class);
+        $items = $repository->findAll();
 
         return $this->json(
             [
                 'page' => $page,
                 'limit' => $limit,
-                'data' => array_map(function ($item) {
+                'data' => array_map(function (BlogPost $item) {
                     return $this->generateUrl('blog_by_slug', ['slug' => $item['slug']]);
-                }, self::POSTS)
+                }, $items)
             ]
         );
     }
 
     /**
-     * @Route("/{id}", name="blog_by_id", requirements={"id"="\d+"})
+     * @Route("/post/{id}", name="blog_by_id", requirements={"id"="\d+"}, methods={"GET"})
      */
-    public function post($id)
+    public function post(BlogPost $post)
     {
-        return $this->json(
-            self::POSTS[array_search($id, array_column(self::POSTS, 'id'))]
-        );
+        // It's the same as doing find($id) on repository.
+        return $this->json($post);
     }
 
     /**
-     * @Route("/{slug}", name="blog_by_slug")
+     * @Route("/post/{slug}", name="blog_by_slug", methods={"GET"})
      */
-    public function postBySlug($slug)
+    public function postBySlug(BlogPost $post)
     {
-        return $this->json(
-            self::POSTS[array_search($slug, array_column(self::POSTS, 'slug'))]
-        );
+        // Same as doing findOneBy('slug' => content of {slug}]) .
+        return $this->json($post);
+    }
+
+    /**
+     * @Route("/add", name="blog_add", methods={"POST"})
+     */
+    public function add(Request $request)
+    {
+        /** @var Serializer $serializer */
+        $serializer = $this->get('serializer');
+
+        $blogPost = $serializer->deserialize($request->getContent(), BlogPost::class, 'json');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($blogPost);
+        $em->flush();
+
+        return $this->json($blogPost);
+    }
+
+    /**
+     * @Route("/post/{id}", name="blog_delete", methods={"DELETE"})
+     */
+    public function delete(BlogPost $post)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($post);
+        $em->flush();
+
+        return new JsonResponse(null, \Symfony\Component\HttpFoundation\Response::HTTP_NO_CONTENT);
     }
 }

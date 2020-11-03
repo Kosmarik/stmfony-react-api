@@ -78,6 +78,15 @@ private static $installed = array (
       ),
       'reference' => 'a3c6479858989e242a2465972b4f7a8642baf0d4',
     ),
+    'doctrine/data-fixtures' => 
+    array (
+      'pretty_version' => '1.4.4',
+      'version' => '1.4.4.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '16a03fadb5473f49aad70384002dfd5012fe680e',
+    ),
     'doctrine/dbal' => 
     array (
       'pretty_version' => '2.12.0',
@@ -95,6 +104,15 @@ private static $installed = array (
       array (
       ),
       'reference' => 'f5153089993e1230f5d8acbd8e126014d5a63e17',
+    ),
+    'doctrine/doctrine-fixtures-bundle' => 
+    array (
+      'pretty_version' => '3.3.2',
+      'version' => '3.3.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'a2179f447425d9e784fb9bc224e533a0ab083b98',
     ),
     'doctrine/doctrine-migrations-bundle' => 
     array (

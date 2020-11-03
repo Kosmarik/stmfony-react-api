@@ -5,7 +5,9 @@
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], []],
     'blog_list' => [['page'], ['page' => 1, '_controller' => 'App\\Controller\\BlogController::blogList'], ['page' => '\\d+'], [['variable', '/', '\\d+', 'page', true], ['text', '/blog']], [], []],
-    'blog_by_id' => [['id'], ['_controller' => 'App\\Controller\\BlogController::post'], ['id' => '\\d+'], [['variable', '/', '\\d+', 'id', true], ['text', '/blog']], [], []],
-    'blog_by_slug' => [['slug'], ['_controller' => 'App\\Controller\\BlogController::postBySlug'], [], [['variable', '/', '[^/]++', 'slug', true], ['text', '/blog']], [], []],
+    'blog_by_id' => [['id'], ['_controller' => 'App\\Controller\\BlogController::post'], ['id' => '\\d+'], [['variable', '/', '\\d+', 'id', true], ['text', '/blog/post']], [], []],
+    'blog_by_slug' => [['slug'], ['_controller' => 'App\\Controller\\BlogController::postBySlug'], [], [['variable', '/', '[^/]++', 'slug', true], ['text', '/blog/post']], [], []],
+    'blog_add' => [[], ['_controller' => 'App\\Controller\\BlogController::add'], [], [['text', '/blog/add']], [], []],
+    'blog_delete' => [['id'], ['_controller' => 'App\\Controller\\BlogController::delete'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/blog/post']], [], []],
     'default_index' => [[], ['_controller' => 'App\\Controller\\DefaultController::index'], [], [['text', '/']], [], []],
 ];
