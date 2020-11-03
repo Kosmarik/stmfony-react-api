@@ -222,6 +222,15 @@ private static $installed = array (
       ),
       'reference' => 'c038ee75ca13663ddc2d1f185fe6f7533c00832a',
     ),
+    'fzaninotto/faker' => 
+    array (
+      'pretty_version' => 'v1.9.1',
+      'version' => '1.9.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'fc10d778e4b84d5bd315dad194661e091d307c6f',
+    ),
     'laminas/laminas-code' => 
     array (
       'pretty_version' => '3.4.1',

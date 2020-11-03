@@ -9,6 +9,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
         'ApiPlatform\\Core\\Metadata\\Property\\PropertyNameCollection' => [
             'properties' => [
                 [
+                    'comments',
                     'id',
                     'title',
                     'published',
