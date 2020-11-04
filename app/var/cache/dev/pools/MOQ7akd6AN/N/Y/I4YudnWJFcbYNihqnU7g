@@ -41,6 +41,23 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     'salt' => $o[9],
                 ],
             ],
+            'groups' => [
+                1 => [
+                    'read',
+                ],
+                [
+                    'read',
+                ],
+                4 => [
+                    'read',
+                ],
+                6 => [
+                    'read',
+                ],
+                [
+                    'read',
+                ],
+            ],
         ],
     ],
     $o[0],
