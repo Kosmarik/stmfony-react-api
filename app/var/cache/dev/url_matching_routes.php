@@ -39,7 +39,10 @@ return [
                             .'|(?:\\.([^/]++))?(*:328)'
                             .'|/([^/\\.]++)(?:\\.([^/]++))?(*:362)'
                         .')'
-                        .'|users/([^/\\.]++)(?:\\.([^/]++))?(*:402)'
+                        .'|users(?'
+                            .'|(?:\\.([^/]++))?(*:394)'
+                            .'|/([^/\\.]++)(?:\\.([^/]++))?(*:428)'
+                        .')'
                     .')'
                 .')'
             .')/?$}sDu',
@@ -57,7 +60,8 @@ return [
         290 => [[['_route' => 'api_comments_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Comment', '_api_item_operation_name' => 'get'], ['id', '_format'], ['GET' => 0], null, false, true, null]],
         328 => [[['_route' => 'api_blog_posts_get_collection', '_controller' => 'api_platform.action.get_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\BlogPost', '_api_collection_operation_name' => 'get'], ['_format'], ['GET' => 0], null, false, true, null]],
         362 => [[['_route' => 'api_blog_posts_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\BlogPost', '_api_item_operation_name' => 'get'], ['id', '_format'], ['GET' => 0], null, false, true, null]],
-        402 => [
+        394 => [[['_route' => 'api_users_post_collection', '_controller' => 'api_platform.action.post_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_collection_operation_name' => 'post'], ['_format'], ['POST' => 0], null, false, true, null]],
+        428 => [
             [['_route' => 'api_users_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'get'], ['id', '_format'], ['GET' => 0], null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],
