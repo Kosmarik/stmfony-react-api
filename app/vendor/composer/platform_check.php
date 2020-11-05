@@ -10,10 +10,16 @@ if (!(PHP_VERSION_ID >= 70401)) {
 
 $missingExtensions = array();
 extension_loaded('ctype') || $missingExtensions[] = 'ctype';
+extension_loaded('date') || $missingExtensions[] = 'date';
 extension_loaded('filter') || $missingExtensions[] = 'filter';
+extension_loaded('hash') || $missingExtensions[] = 'hash';
 extension_loaded('iconv') || $missingExtensions[] = 'iconv';
 extension_loaded('json') || $missingExtensions[] = 'json';
+extension_loaded('mbstring') || $missingExtensions[] = 'mbstring';
+extension_loaded('openssl') || $missingExtensions[] = 'openssl';
+extension_loaded('pcre') || $missingExtensions[] = 'pcre';
 extension_loaded('pdo') || $missingExtensions[] = 'pdo';
+extension_loaded('spl') || $missingExtensions[] = 'spl';
 extension_loaded('tokenizer') || $missingExtensions[] = 'tokenizer';
 extension_loaded('xml') || $missingExtensions[] = 'xml';
 

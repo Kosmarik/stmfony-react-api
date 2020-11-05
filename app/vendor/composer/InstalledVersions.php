@@ -258,6 +258,33 @@ private static $installed = array (
       ),
       'reference' => '6ede70583e101030bcace4dcddd648f760ddf642',
     ),
+    'lcobucci/jwt' => 
+    array (
+      'pretty_version' => '3.3.3',
+      'version' => '3.3.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'c1123697f6a2ec29162b82f170dd4a491f524773',
+    ),
+    'lexik/jwt-authentication-bundle' => 
+    array (
+      'pretty_version' => 'v2.9.0',
+      'version' => '2.9.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2c3448975c5560f4a29ac6f3bfc1fb24673609c0',
+    ),
+    'namshi/jose' => 
+    array (
+      'pretty_version' => '7.2.3',
+      'version' => '7.2.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '89a24d7eb3040e285dd5925fcad992378b82bcff',
+    ),
     'nelmio/cors-bundle' => 
     array (
       'pretty_version' => '2.1.0',
