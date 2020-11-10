@@ -35,6 +35,17 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     'comments' => $o[7],
                 ],
             ],
+            'groups' => [
+                2 => [
+                    'post',
+                ],
+                4 => [
+                    'post',
+                ],
+                6 => [
+                    'post',
+                ],
+            ],
         ],
     ],
     $o[0],

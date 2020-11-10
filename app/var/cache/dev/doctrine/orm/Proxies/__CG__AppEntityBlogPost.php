@@ -238,7 +238,7 @@ class BlogPost extends \App\Entity\BlogPost implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function setPublished(\DateTimeInterface $published): \App\Entity\BlogPost
+    public function setPublished(\DateTimeInterface $published): \App\Entity\PublishedDateEntityInterface
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPublished', [$published]);
@@ -304,7 +304,7 @@ class BlogPost extends \App\Entity\BlogPost implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function setAuthor(\App\Entity\User $author): \App\Entity\BlogPost
+    public function setAuthor(\Symfony\Component\Security\Core\User\UserInterface $author): \App\Entity\AuthoredEntityInterface
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAuthor', [$author]);

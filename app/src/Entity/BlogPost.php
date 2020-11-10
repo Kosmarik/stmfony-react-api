@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         "post"={"access_control"="is_granted('IS_AUTHENTICATED_FULLY')"}
  *     },
  *     denormalizationContext={
- *          "groups"={"post"}
+ *         "groups"={"post"}
  *     }
  * )
  */
