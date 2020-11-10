@@ -1,0 +1,3 @@
+<?php //route_name_3aa983e3e7fa55bfb0d42a9ec2fce6da
+
+return [PHP_INT_MAX, 'api_blog_posts_comments_get_subresource'];

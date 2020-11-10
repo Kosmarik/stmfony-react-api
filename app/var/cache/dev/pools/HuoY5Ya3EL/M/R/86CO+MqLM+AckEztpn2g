@@ -1,3 +1,30 @@
 <?php //subresource_operations_16a59f908e386952819d37395fb578df
 
-return [PHP_INT_MAX, []];
+return [PHP_INT_MAX, [
+    'api_blog_posts_comments_get_subresource' => [
+        'property' => 'comments',
+        'collection' => true,
+        'resource_class' => 'App\\Entity\\Comment',
+        'shortNames' => [
+            'Comment',
+            'BlogPost',
+        ],
+        'identifiers' => [
+            [
+                'id',
+                'App\\Entity\\BlogPost',
+                true,
+            ],
+        ],
+        'operation_name' => 'comments_get_subresource',
+        'route_name' => 'api_blog_posts_comments_get_subresource',
+        'path' => '/blog_posts/{id}/comments.{_format}',
+        'defaults' => [],
+        'requirements' => [],
+        'options' => [],
+        'host' => '',
+        'schemes' => [],
+        'condition' => '',
+        'controller' => null,
+    ],
+]];

@@ -33,6 +33,9 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 2 => [
                     'post',
                 ],
+                5 => [
+                    'post',
+                ],
             ],
         ],
     ],
