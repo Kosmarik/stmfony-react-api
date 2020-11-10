@@ -16,7 +16,53 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             'itemOperations' => [
                 [
                     'get' => [
+                        'access_control' => 'is_granted(\'IS_AUTHENTICATED_FULLY\')',
+                        'normalizationContext' => [
+                            'groups' => [
+                                'get',
+                            ],
+                        ],
+                        'input' => null,
+                        'output' => null,
                         'method' => 'GET',
+                        'input_formats' => [
+                            'jsonld' => [
+                                'application/ld+json',
+                            ],
+                            'json' => [
+                                'application/json',
+                            ],
+                            'html' => [
+                                'text/html',
+                            ],
+                        ],
+                        'output_formats' => [
+                            'jsonld' => [
+                                'application/ld+json',
+                            ],
+                            'json' => [
+                                'application/json',
+                            ],
+                            'html' => [
+                                'text/html',
+                            ],
+                        ],
+                    ],
+                    'put' => [
+                        'access_control' => 'is_granted(\'IS_AUTHENTICATED_FULLY\') and object == user',
+                        'denormalizationContext' => [
+                            'groups' => [
+                                'put',
+                            ],
+                        ],
+                        'normalizationContext' => [
+                            'groups' => [
+                                'get',
+                            ],
+                        ],
+                        'input' => null,
+                        'output' => null,
+                        'method' => 'PUT',
                         'input_formats' => [
                             'jsonld' => [
                                 'application/ld+json',
@@ -45,6 +91,18 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             'collectionOperations' => [
                 [
                     'post' => [
+                        'denormalizationContext' => [
+                            'groups' => [
+                                'post',
+                            ],
+                        ],
+                        'normalizationContext' => [
+                            'groups' => [
+                                'get',
+                            ],
+                        ],
+                        'input' => null,
+                        'output' => null,
                         'method' => 'POST',
                         'input_formats' => [
                             'jsonld' => [
@@ -82,11 +140,6 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             ],
             'attributes' => [
                 [
-                    'normalization_context' => [
-                        'groups' => [
-                            'read',
-                        ],
-                    ],
                     'input' => null,
                     'output' => null,
                 ],
