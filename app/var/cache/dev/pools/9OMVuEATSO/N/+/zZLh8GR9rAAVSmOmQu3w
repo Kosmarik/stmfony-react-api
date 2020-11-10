@@ -138,6 +138,11 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             ],
             'attributes' => [
                 [
+                    'denormalization_context' => [
+                        'groups' => [
+                            'post',
+                        ],
+                    ],
                     'input' => null,
                     'output' => null,
                 ],
