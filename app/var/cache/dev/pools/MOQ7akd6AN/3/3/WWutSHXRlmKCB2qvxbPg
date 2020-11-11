@@ -30,10 +30,20 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 ],
             ],
             'groups' => [
-                2 => [
-                    'post',
+                1 => [
+                    'get-comment-with-author',
                 ],
-                5 => [
+                [
+                    'post',
+                    'get-comment-with-author',
+                ],
+                [
+                    'get-comment-with-author',
+                ],
+                [
+                    'get-comment-with-author',
+                ],
+                [
                     'post',
                 ],
             ],

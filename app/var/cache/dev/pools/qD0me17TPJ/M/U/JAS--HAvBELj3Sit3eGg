@@ -31,8 +31,8 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
         'Symfony\\Component\\Serializer\\Annotation\\Groups' => [
             'groups' => [
                 1 => [
-                    'get',
                     'post',
+                    'put',
                 ],
             ],
         ],

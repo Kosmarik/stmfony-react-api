@@ -13,14 +13,14 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             'collectionOperations' => [
                 [
                     'post' => [
-                        'denormalizationContext' => [
+                        'denormalization_context' => [
                             'groups' => [
                                 'post',
                             ],
                         ],
-                        'normalizationContext' => [
+                        'normalization_context' => [
                             'groups' => [
-                                'get',
+                                'user_read',
                             ],
                         ],
                     ],
@@ -30,22 +30,22 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 [
                     'get' => [
                         'access_control' => 'is_granted(\'IS_AUTHENTICATED_FULLY\')',
-                        'normalizationContext' => [
+                        'normalization_context' => [
                             'groups' => [
-                                'get',
+                                'user_read',
                             ],
                         ],
                     ],
                     'put' => [
                         'access_control' => 'is_granted(\'IS_AUTHENTICATED_FULLY\') and object == user',
-                        'denormalizationContext' => [
+                        'denormalization_context' => [
                             'groups' => [
                                 'put',
                             ],
                         ],
-                        'normalizationContext' => [
+                        'normalization_context' => [
                             'groups' => [
-                                'get',
+                                'user_read',
                             ],
                         ],
                     ],

@@ -36,14 +36,29 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 ],
             ],
             'groups' => [
-                2 => [
-                    'post',
+                1 => [
+                    'get-blog-with-author',
                 ],
-                4 => [
+                [
                     'post',
+                    'get-blog-with-author',
                 ],
-                6 => [
+                [
+                    'get-blog-with-author',
+                ],
+                [
                     'post',
+                    'get-blog-with-author',
+                ],
+                [
+                    'get-blog-with-author',
+                ],
+                [
+                    'post',
+                    'get-blog-with-author',
+                ],
+                [
+                    'get-blog-with-author',
                 ],
             ],
         ],

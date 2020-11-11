@@ -16,6 +16,13 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             'itemOperations' => [
                 [
                     'get' => [
+                        'normalization_context' => [
+                            'groups' => [
+                                'get-blog-with-author',
+                            ],
+                        ],
+                        'input' => null,
+                        'output' => null,
                         'method' => 'GET',
                         'input_formats' => [
                             'jsonld' => [

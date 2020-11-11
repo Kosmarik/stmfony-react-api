@@ -24,6 +24,17 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     ],
                 ],
             ],
+            'subresourceOperations' => [
+                [
+                    'api_blog_posts_comments_get_subresource' => [
+                        'normalization_context' => [
+                            'groups' => [
+                                'get-comment-with-author',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
             'attributes' => [
                 [
                     'denormalization_context' => [
