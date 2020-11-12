@@ -41,7 +41,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                         ],
                     ],
                     'put' => [
-                        'access_control' => 'is_granted(\'IS_AUTHENTICATED_FULLY\') and object.getAuthor() == user',
+                        'access_control' => 'is_granted(\'ROLE_EDITOR\') or (is_granted(\'ROLE_COMMENTATOR\') and object.getAuthor() == user)',
                         'input' => null,
                         'output' => null,
                         'method' => 'PUT',
@@ -98,7 +98,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                         ],
                     ],
                     'post' => [
-                        'access_control' => 'is_granted(\'IS_AUTHENTICATED_FULLY\')',
+                        'access_control' => 'is_granted(\'ROLE_COMMENTATOR\')',
                         'input' => null,
                         'output' => null,
                         'method' => 'POST',

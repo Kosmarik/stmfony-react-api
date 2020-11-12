@@ -13,28 +13,46 @@ class AppFixtures extends Fixture
 {
     CONST USERS = [
         [
-            "username" => "Kosmarik",
-            "email" => "kosmarik@test.test",
-            "name" => "Kosmarik",
-            "password" => "Password123"
+            "username" => "Lait",
+            "email" => "lait@test.test",
+            "name" => "Lait",
+            "password" => "Password123",
+            "roles" => [User::ROLE_SUPERADMIN]
         ],
         [
-            "username" => "Hailain",
-            "email" => "r.hainlain@test.test",
-            "name" => "R. Hailain",
-            "password" => "Password123"
+            "username" => "Dmitrij",
+            "email" => "dmitrij@test.test",
+            "name" => "Dmitrij",
+            "password" => "Password123",
+            "roles" => [User::ROLE_ADMIN]
         ],
         [
-            "username" => "RobrtMartin",
-            "email" => "robert.martin@test.test",
-            "name" => "Robert C. Martin",
-            "password" => "Password123"
+            "username" => "Pushkin",
+            "email" => "pushkin@test.test",
+            "name" => "Pushkin",
+            "password" => "Password123",
+            "roles" => [User::ROLE_WRITER]
         ],
         [
-            "username" => "MattZandstra",
-            "email" => "matt.zandstra@test.test",
-            "name" => "Matt Zandstra",
-            "password" => "Password123"
+            "username" => "Tolstoi",
+            "email" => "tolstoi@test.test",
+            "name" => "Tolstoi",
+            "password" => "Password123",
+            "roles" => [User::ROLE_WRITER]
+        ],
+        [
+            "username" => "Lermantov",
+            "email" => "lermantov@test.test",
+            "name" => "Lermantov",
+            "password" => "Password123",
+            "roles" => [User::ROLE_COMMENTATOR]
+        ],
+        [
+            "username" => "Han solo",
+            "email" => "han.solo@test.test",
+            "name" => "Han solo",
+            "password" => "Password123",
+            "roles" => [User::ROLE_EDITOR]
         ],
     ];
 
@@ -69,7 +87,7 @@ class AppFixtures extends Fixture
             $blogPost->setPublished($this->faker->dateTimeThisYear);
             $blogPost->setContent($this->faker->realText());
 
-            $authorReference = $this->getRandomUserReference();
+            $authorReference = $this->getRandomUserReference($blogPost);
 
             $blogPost->setAuthor($authorReference);
             $blogPost->setSlug($this->faker->slug);
@@ -90,7 +108,7 @@ class AppFixtures extends Fixture
                 $comment->setContent($this->faker->realText());
                 $comment->setPublished($this->faker->dateTimeThisYear);
 
-                $authorReference = $this->getRandomUserReference();
+                $authorReference = $this->getRandomUserReference($comment);
 
                 $comment->setAuthor($authorReference);
                 $comment->setBlogPost($this->getReference("blog_post_$i"));
@@ -114,6 +132,8 @@ class AppFixtures extends Fixture
                 $user,
                 $userFixture['password']
             ));
+            $user->setRoles($userFixture['roles']);
+
             $this->addReference('user_' . $userFixture['username'], $user);
 
             $manager->persist($user);
@@ -122,8 +142,35 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 
-    protected function getRandomUserReference(): User
+    protected function getRandomUserReference($entity): User
     {
-        return $this->getReference('user_' . self::USERS[rand(0, 3)]['username']);
+        $randomUser = self::USERS[rand(0, 5)];
+
+        if ($entity instanceof BlogPost && !count(
+            array_intersect(
+                $randomUser['roles'],
+                [
+                    User::ROLE_SUPERADMIN,
+                    User::ROLE_ADMIN,
+                    User::ROLE_WRITER
+                ])
+            )) {
+            return $this->getRandomUserReference($entity);
+        }
+
+        if ($entity instanceof Comment && !count(
+                array_intersect(
+                    $randomUser['roles'],
+                    [
+                        User::ROLE_SUPERADMIN,
+                        User::ROLE_ADMIN,
+                        User::ROLE_WRITER,
+                        User::ROLE_COMMENTATOR
+                    ])
+            )) {
+            return $this->getRandomUserReference($entity);
+        }
+
+        return $this->getReference('user_' . $randomUser['username']);
     }
 }
