@@ -72,12 +72,18 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 [
                     'post',
                     'put',
+                    'get-admin',
+                    'get-owner',
                 ],
                 [
                     'user_read',
                 ],
                 [
                     'user_read',
+                ],
+                [
+                    'get-admin',
+                    'get-owner',
                 ],
             ],
         ],

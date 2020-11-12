@@ -422,6 +422,15 @@
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
+    <service id="App\Serializer\UserAttributeNormalizer" class="App\Serializer\UserAttributeNormalizer" autowire="true" autoconfigure="true">
+      <tag name="serializer.normalizer" priority="64"/>
+      <tag name="serializer.normalizer"/>
+      <argument type="service" id="security.token_storage"/>
+    </service>
+    <service id="App\Serializer\UserContextBuilder" class="App\Serializer\UserContextBuilder" autowire="true" autoconfigure="true">
+      <argument type="service" id="App\Serializer\UserContextBuilder.inner"/>
+      <argument type="service" id="security.authorization_checker"/>
+    </service>
     <service id="argument_metadata_factory" class="Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory" public="false"/>
     <service id="response_listener" class="Symfony\Component\HttpKernel\EventListener\ResponseListener" public="false">
       <tag name="kernel.event_subscriber"/>
@@ -2817,6 +2826,7 @@
     <service id="serializer" class="Symfony\Component\Serializer\Serializer" public="true">
       <argument type="collection">
         <argument type="service" id="serializer.denormalizer.unwrapping"/>
+        <argument type="service" id="App\Serializer\UserAttributeNormalizer"/>
         <argument type="service" id="api_platform.swagger.normalizer.api_gateway"/>
         <argument type="service" id="api_platform.hydra.normalizer.constraint_violation_list"/>
         <argument type="service" id="api_platform.problem.normalizer.constraint_violation_list"/>
@@ -4997,7 +5007,7 @@
     <service id="api_platform.serializer.context_builder.filter" class="ApiPlatform\Core\Serializer\SerializerFilterContextBuilder" public="false">
       <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
       <argument type="service" id="api_platform.filter_locator"/>
-      <argument type="service" id="api_platform.serializer.context_builder.filter.inner"/>
+      <argument type="service" id="App\Serializer\UserContextBuilder"/>
     </service>
     <service id="api_platform.serializer.property_filter" class="ApiPlatform\Core\Serializer\Filter\PropertyFilter" public="false" abstract="true">
       <argument>properties</argument>
@@ -5832,6 +5842,8 @@
     <service id=".abstract.instanceof.App\Repository\CommentRepository" class="App\Repository\CommentRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Serializer\Normalizer\NormalizerInterface.0.App\Serializer\UserAttributeNormalizer" class="App\Serializer\UserAttributeNormalizer" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Serializer\UserAttributeNormalizer" class="App\Serializer\UserAttributeNormalizer" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.EasyCorp\Bundle\EasyAdminBundle\Contracts\Filter\FilterConfiguratorInterface.0.EasyCorp\Bundle\EasyAdminBundle\Filter\Configurator\ChoiceConfigurator" class="EasyCorp\Bundle\EasyAdminBundle\Filter\Configurator\ChoiceConfigurator" public="false" abstract="true"/>
     <service id=".abstract.instanceof.EasyCorp\Bundle\EasyAdminBundle\Filter\Configurator\ChoiceConfigurator" class="EasyCorp\Bundle\EasyAdminBundle\Filter\Configurator\ChoiceConfigurator" public="false" abstract="true"/>
     <service id=".instanceof.EasyCorp\Bundle\EasyAdminBundle\Contracts\Filter\FilterConfiguratorInterface.0.EasyCorp\Bundle\EasyAdminBundle\Filter\Configurator\CommonConfigurator" class="EasyCorp\Bundle\EasyAdminBundle\Filter\Configurator\CommonConfigurator" public="false" abstract="true"/>
@@ -6448,6 +6460,9 @@
         <argument key="security.token_storage" type="service" id="security.token_storage"/>
       </argument>
     </service>
+    <service id="App\Serializer\UserContextBuilder.inner" class="ApiPlatform\Core\Serializer\SerializerContextBuilder" public="false">
+      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
+    </service>
     <service id="debug.event_dispatcher.inner" class="Symfony\Component\EventDispatcher\EventDispatcher" public="false"/>
     <service id="debug.controller_resolver.inner" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver" public="false">
       <argument type="service" id="service_container"/>
@@ -6480,9 +6495,6 @@
       <argument>affirmative</argument>
       <argument>false</argument>
       <argument>true</argument>
-    </service>
-    <service id="api_platform.serializer.context_builder.filter.inner" class="ApiPlatform\Core\Serializer\SerializerContextBuilder" public="false">
-      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
     </service>
     <service id="api_platform.identifiers_extractor.cached.inner" class="ApiPlatform\Core\Api\IdentifiersExtractor" public="false">
       <argument type="service" id="api_platform.metadata.property.name_collection_factory.cached"/>
@@ -6985,13 +6997,14 @@
     <service id="api_platform.metadata.resource.metadata_factory.operation.inner" alias="api_platform.metadata.resource.filter_metadata_factory.annotation" public="false"/>
     <service id="api_platform.metadata.property.name_collection_factory.inherited.inner" alias="api_platform.metadata.property.name_collection_factory.property_info" public="false"/>
     <service id="api_platform.metadata.resource.metadata_factory.formats.inner" alias="api_platform.metadata.resource.metadata_factory.operation" public="false"/>
+    <service id="api_platform.serializer.context_builder" alias="api_platform.serializer.context_builder.filter" public="false"/>
     <service id="event_dispatcher" alias="debug.event_dispatcher" public="true"/>
     <service id="controller_resolver" alias="debug.controller_resolver" public="false"/>
     <service id="argument_resolver" alias="debug.argument_resolver" public="false"/>
     <service id="serializer.mapping.class_metadata_factory" alias="serializer.mapping.cache_class_metadata_factory" public="false"/>
     <service id="twig.error_renderer.html.inner" alias="error_handler.error_renderer.html" public="false"/>
     <service id="security.access.decision_manager" alias="debug.security.access.decision_manager" public="false"/>
-    <service id="api_platform.serializer.context_builder" alias="api_platform.serializer.context_builder.filter" public="false"/>
+    <service id="api_platform.serializer.context_builder.filter.inner" alias="App\Serializer\UserContextBuilder" public="false"/>
     <service id="api_platform.identifiers_extractor" alias="api_platform.identifiers_extractor.cached" public="false"/>
     <service id="api_platform.metadata.property.name_collection_factory.xml.inner" alias="api_platform.metadata.property.name_collection_factory.inherited" public="false"/>
     <service id="api_platform.metadata.resource.name_collection_factory.annotation.inner" alias="api_platform.metadata.resource.name_collection_factory.xml" public="false"/>
