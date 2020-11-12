@@ -53,8 +53,11 @@ return [
                         .')'
                         .'|users(?'
                             .'|(?:\\.([^/]++))?(*:454)'
-                            .'|/([^/\\.]++)(?:\\.([^/]++))?(?'
-                                .'|(*:491)'
+                            .'|/(?'
+                                .'|([^/\\.]++)(?:\\.([^/]++))?(?'
+                                    .'|(*:494)'
+                                .')'
+                                .'|([^/]++)/reset\\-password(*:527)'
                             .')'
                         .')'
                     .')'
@@ -88,9 +91,12 @@ return [
         ],
         421 => [[['_route' => 'api_blog_posts_comments_get_subresource', '_controller' => 'api_platform.action.get_subresource', '_format' => null, '_api_resource_class' => 'App\\Entity\\Comment', '_api_subresource_operation_name' => 'api_blog_posts_comments_get_subresource', '_api_subresource_context' => ['property' => 'comments', 'identifiers' => [['id', 'App\\Entity\\BlogPost', true]], 'collection' => true, 'operationId' => 'api_blog_posts_comments_get_subresource']], ['id', '_format'], ['GET' => 0], null, false, true, null]],
         454 => [[['_route' => 'api_users_post_collection', '_controller' => 'api_platform.action.post_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_collection_operation_name' => 'post'], ['_format'], ['POST' => 0], null, false, true, null]],
-        491 => [
+        494 => [
             [['_route' => 'api_users_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'get'], ['id', '_format'], ['GET' => 0], null, false, true, null],
             [['_route' => 'api_users_put_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'put'], ['id', '_format'], ['PUT' => 0], null, false, true, null],
+        ],
+        527 => [
+            [['_route' => 'api_users_put-reset-password_item', '_controller' => 'App\\Controller\\ResetPasswordAction', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'put-reset-password'], ['id'], ['PUT' => 0], null, false, false, null],
             [null, null, null, null, false, false, 0],
         ],
     ],

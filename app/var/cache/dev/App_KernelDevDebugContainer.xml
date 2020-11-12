@@ -395,6 +395,13 @@
         <argument type="service" id=".service_locator.g9CqTPp.App\Controller\DefaultController"/>
       </call>
     </service>
+    <service id="App\Controller\ResetPasswordAction" class="App\Controller\ResetPasswordAction" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <argument type="service" id="api_platform.validator"/>
+      <argument type="service" id="security.user_password_encoder.generic"/>
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+      <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
+    </service>
     <service id="App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" autoconfigure="true">
       <tag name="doctrine.fixture.orm"/>
       <argument type="service" id="security.user_password_encoder.generic"/>
@@ -421,6 +428,12 @@
     <service id="App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
+    </service>
+    <service id="App\Security\TokenAuthenticator" class="App\Security\TokenAuthenticator" autowire="true" autoconfigure="true">
+      <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
+      <argument type="service" id="debug.event_dispatcher"/>
+      <argument type="service" id="lexik_jwt_authentication.extractor.chain_extractor"/>
+      <argument type="service" id="security.token_storage"/>
     </service>
     <service id="App\Serializer\UserAttributeNormalizer" class="App\Serializer\UserAttributeNormalizer" autowire="true" autoconfigure="true">
       <tag name="serializer.normalizer" priority="64"/>
@@ -4519,7 +4532,7 @@
       <argument>true</argument>
       <argument>security.user.provider.concrete.databse</argument>
       <argument>null</argument>
-      <argument>lexik_jwt_authentication.jwt_token_authenticator</argument>
+      <argument>App\Security\TokenAuthenticator</argument>
       <argument>null</argument>
       <argument>null</argument>
       <argument type="collection">
@@ -4544,7 +4557,7 @@
     </service>
     <service id="security.authentication.provider.guard.api" class="Symfony\Component\Security\Guard\Provider\GuardAuthenticationProvider" public="false">
       <argument type="iterator">
-        <argument type="service" id="lexik_jwt_authentication.security.guard.jwt_token_authenticator"/>
+        <argument type="service" id="App\Security\TokenAuthenticator"/>
       </argument>
       <argument type="service" id="security.user.provider.concrete.databse"/>
       <argument>api</argument>
@@ -4557,7 +4570,7 @@
       <argument type="service" id="security.authentication.manager"/>
       <argument>api</argument>
       <argument type="iterator">
-        <argument type="service" id="lexik_jwt_authentication.security.guard.jwt_token_authenticator"/>
+        <argument type="service" id="App\Security\TokenAuthenticator"/>
       </argument>
       <argument type="service" id="logger" on-invalid="null"/>
     </service>
@@ -4613,7 +4626,7 @@
       <argument type="service" id="security.authentication.trust_resolver"/>
       <argument type="service" id="security.http_utils"/>
       <argument>api</argument>
-      <argument type="service" id="lexik_jwt_authentication.security.guard.jwt_token_authenticator"/>
+      <argument type="service" id="App\Security\TokenAuthenticator"/>
       <argument>null</argument>
       <argument>null</argument>
       <argument type="service" id="logger" on-invalid="null"/>
@@ -6171,12 +6184,19 @@
         <argument key="post" type="service" id=".errored..service_locator.G5AQjsF.App\Entity\BlogPost"/>
       </argument>
     </service>
-    <service id=".service_locator.H3Hb90S" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.93Qi50q" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="data" type="service" id=".errored..service_locator.93Qi50q.App\Entity\User"/>
+      </argument>
+    </service>
+    <service id=".service_locator.Fijwxfs" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\BlogController::delete" type="service" id=".service_locator.G5AQjsF"/>
         <argument key="App\Controller\BlogController::post" type="service" id=".service_locator.G5AQjsF"/>
         <argument key="App\Controller\BlogController::postBySlug" type="service" id=".service_locator.G5AQjsF"/>
+        <argument key="App\Controller\ResetPasswordAction::__invoke" type="service" id=".service_locator.93Qi50q"/>
         <argument key="App\Kernel::loadRoutes" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="App\Kernel::terminate" type="service" id=".service_locator.beq5mCo"/>
@@ -6186,6 +6206,8 @@
         <argument key="App\Controller\BlogController:delete" type="service" id=".service_locator.G5AQjsF"/>
         <argument key="App\Controller\BlogController:post" type="service" id=".service_locator.G5AQjsF"/>
         <argument key="App\Controller\BlogController:postBySlug" type="service" id=".service_locator.G5AQjsF"/>
+        <argument key="App\Controller\ResetPasswordAction:__invoke" type="service" id=".service_locator.93Qi50q"/>
+        <argument key="App\Controller\ResetPasswordAction" type="service" id=".service_locator.93Qi50q"/>
         <argument key="kernel:loadRoutes" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel:registerContainerConfiguration" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel:terminate" type="service" id=".service_locator.beq5mCo"/>
@@ -6537,12 +6559,12 @@
       <argument type="service" id="EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.H3Hb90S"/>
+      <argument type="service" id=".service_locator.Fijwxfs"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver" public="false">
-      <argument type="service" id=".service_locator.H3Hb90S"/>
+      <argument type="service" id=".service_locator.Fijwxfs"/>
     </service>
     <service id="api_platform.swagger.normalizer.api_gateway.inner" class="ApiPlatform\Core\Swagger\Serializer\DocumentationNormalizer" public="false">
       <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
@@ -6584,6 +6606,7 @@
     <service id=".errored..service_locator.beq5mCo.Symfony\Component\HttpFoundation\Response" class="Symfony\Component\HttpFoundation\Response"/>
     <service id=".errored..service_locator.C9JCBPC.Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface"/>
     <service id=".errored..service_locator.G5AQjsF.App\Entity\BlogPost" class="App\Entity\BlogPost"/>
+    <service id=".errored..service_locator.93Qi50q.App\Entity\User" class="App\Entity\User"/>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
       <tag name="container.no_preload"/>
       <argument type="service" id=".service_locator.Etkr_oM"/>
@@ -6973,7 +6996,7 @@
     <service id="lexik_jwt_authentication.key_loader" alias="lexik_jwt_authentication.key_loader.raw" public="true"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.WaGDpDt" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.H3Hb90S"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.Fijwxfs"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="api_platform.name_converter" alias="serializer.name_converter.metadata_aware"/>
     <service id="Psr\Log\LoggerInterface" alias="logger" public="false"/>

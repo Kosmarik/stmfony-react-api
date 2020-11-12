@@ -13,6 +13,9 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
     ],
     null,
     [
@@ -23,6 +26,9 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 'username',
                 'password',
                 'retypedPassword',
+                'newPassword',
+                'newRetypedPassword',
+                'oldPassword',
                 'name',
                 'email',
                 'posts',
@@ -36,12 +42,15 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     'username' => $o[2],
                     'password' => $o[3],
                     'retypedPassword' => $o[4],
-                    'name' => $o[5],
-                    'email' => $o[6],
-                    'posts' => $o[7],
-                    'comments' => $o[8],
-                    'roles' => $o[9],
-                    'salt' => $o[10],
+                    'newPassword' => $o[5],
+                    'newRetypedPassword' => $o[6],
+                    'oldPassword' => $o[7],
+                    'name' => $o[8],
+                    'email' => $o[9],
+                    'posts' => $o[10],
+                    'comments' => $o[11],
+                    'roles' => $o[12],
+                    'salt' => $o[13],
                 ],
             ],
             'groups' => [
@@ -56,11 +65,18 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 ],
                 [
                     'post',
-                    'put',
                 ],
                 [
                     'post',
-                    'put',
+                ],
+                [
+                    'put-reset-password',
+                ],
+                [
+                    'put-reset-password',
+                ],
+                [
+                    'put-reset-password',
                 ],
                 [
                     'user_read',
