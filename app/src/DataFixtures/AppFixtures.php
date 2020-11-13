@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\BlogPost;
 use App\Entity\Comment;
 use App\Entity\User;
+use App\Security\TokenGenerator;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -17,42 +18,48 @@ class AppFixtures extends Fixture
             "email" => "lait@test.test",
             "name" => "Lait",
             "password" => "Password123",
-            "roles" => [User::ROLE_SUPERADMIN]
+            "roles" => [User::ROLE_SUPERADMIN],
+            "enabled" => true
         ],
         [
             "username" => "Dmitrij",
             "email" => "dmitrij@test.test",
             "name" => "Dmitrij",
             "password" => "Password123",
-            "roles" => [User::ROLE_ADMIN]
+            "roles" => [User::ROLE_ADMIN],
+            "enabled" => true
         ],
         [
             "username" => "Pushkin",
             "email" => "pushkin@test.test",
             "name" => "Pushkin",
             "password" => "Password123",
-            "roles" => [User::ROLE_WRITER]
+            "roles" => [User::ROLE_WRITER],
+            "enabled" => true
         ],
         [
             "username" => "Tolstoi",
             "email" => "tolstoi@test.test",
             "name" => "Tolstoi",
             "password" => "Password123",
-            "roles" => [User::ROLE_WRITER]
+            "roles" => [User::ROLE_WRITER],
+            "enabled" => true
         ],
         [
             "username" => "Lermantov",
             "email" => "lermantov@test.test",
             "name" => "Lermantov",
             "password" => "Password123",
-            "roles" => [User::ROLE_COMMENTATOR]
+            "roles" => [User::ROLE_COMMENTATOR],
+            "enabled" => false
         ],
         [
             "username" => "Han solo",
             "email" => "han.solo@test.test",
             "name" => "Han solo",
             "password" => "Password123",
-            "roles" => [User::ROLE_EDITOR]
+            "roles" => [User::ROLE_EDITOR],
+            "enabled" => true
         ],
     ];
 
@@ -66,10 +73,19 @@ class AppFixtures extends Fixture
      */
     private $faker;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    /**
+     * @var TokenGenerator
+     */
+    private $tokenGenerator;
+
+    public function __construct(
+        UserPasswordEncoderInterface $passwordEncoder,
+        TokenGenerator $tokenGenerator
+    )
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->faker = \Faker\Factory::create();
+        $this->tokenGenerator = $tokenGenerator;
     }
 
     public function load(ObjectManager $manager)
@@ -133,7 +149,13 @@ class AppFixtures extends Fixture
                 $userFixture['password']
             ));
             $user->setRoles($userFixture['roles']);
-            $user->setEnabled(true);
+            $user->setEnabled($userFixture['enabled']);
+
+            if(!$userFixture['enabled']) {
+                $user->setConfirmationToken(
+                    $this->tokenGenerator->getRandomSecureToken()
+                );
+            }
 
             $this->addReference('user_' . $userFixture['username'], $user);
 

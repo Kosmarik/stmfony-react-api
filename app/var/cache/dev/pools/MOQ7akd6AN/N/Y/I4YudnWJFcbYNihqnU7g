@@ -16,6 +16,9 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
     ],
     null,
     [
@@ -34,6 +37,9 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 'posts',
                 'comments',
                 'roles',
+                'passwordChangeDate',
+                'enabled',
+                'confirmationToken',
                 'salt',
             ],
             'attributesMetadata' => [
@@ -50,7 +56,10 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     'posts' => $o[10],
                     'comments' => $o[11],
                     'roles' => $o[12],
-                    'salt' => $o[13],
+                    'passwordChangeDate' => $o[13],
+                    'enabled' => $o[14],
+                    'confirmationToken' => $o[15],
+                    'salt' => $o[16],
                 ],
             ],
             'groups' => [

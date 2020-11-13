@@ -405,17 +405,19 @@
     <service id="App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" autoconfigure="true">
       <tag name="doctrine.fixture.orm"/>
       <argument type="service" id="security.user_password_encoder.generic"/>
+      <argument type="service" id="App\Security\TokenGenerator"/>
     </service>
     <service id="App\EventSubscriber\AuthoredEntitySubscriber" class="App\EventSubscriber\AuthoredEntitySubscriber" autowire="true" autoconfigure="true">
       <tag name="kernel.event_subscriber"/>
       <argument type="service" id="security.token_storage"/>
     </service>
-    <service id="App\EventSubscriber\PasswordHashSubscriber" class="App\EventSubscriber\PasswordHashSubscriber" autowire="true" autoconfigure="true">
-      <tag name="kernel.event_subscriber"/>
-      <argument type="service" id="security.user_password_encoder.generic"/>
-    </service>
     <service id="App\EventSubscriber\PublishDateEntitySubscriber" class="App\EventSubscriber\PublishDateEntitySubscriber" autowire="true" autoconfigure="true">
       <tag name="kernel.event_subscriber"/>
+    </service>
+    <service id="App\EventSubscriber\UserRegisteredSubscriber" class="App\EventSubscriber\UserRegisteredSubscriber" autowire="true" autoconfigure="true">
+      <tag name="kernel.event_subscriber"/>
+      <argument type="service" id="security.user_password_encoder.generic"/>
+      <argument type="service" id="App\Security\TokenGenerator"/>
     </service>
     <service id="App\Repository\BlogPostRepository" class="App\Repository\BlogPostRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
@@ -435,6 +437,8 @@
       <argument type="service" id="lexik_jwt_authentication.extractor.chain_extractor"/>
       <argument type="service" id="security.token_storage"/>
     </service>
+    <service id="App\Security\TokenGenerator" class="App\Security\TokenGenerator" autowire="true" autoconfigure="true"/>
+    <service id="App\Security\UserEnabledChecker" class="App\Security\UserEnabledChecker" autowire="true" autoconfigure="true"/>
     <service id="App\Serializer\UserAttributeNormalizer" class="App\Serializer\UserAttributeNormalizer" autowire="true" autoconfigure="true">
       <tag name="serializer.normalizer" priority="64"/>
       <tag name="serializer.normalizer"/>
@@ -2268,16 +2272,16 @@
       <call method="addListener">
         <argument>kernel.view</argument>
         <argument type="collection">
-          <argument type="service" id="App\EventSubscriber\PasswordHashSubscriber"/>
-          <argument>hashPassword</argument>
+          <argument type="service" id="App\EventSubscriber\PublishDateEntitySubscriber"/>
+          <argument>setDatePublished</argument>
         </argument>
         <argument>33</argument>
       </call>
       <call method="addListener">
         <argument>kernel.view</argument>
         <argument type="collection">
-          <argument type="service" id="App\EventSubscriber\PublishDateEntitySubscriber"/>
-          <argument>setDatePublished</argument>
+          <argument type="service" id="App\EventSubscriber\UserRegisteredSubscriber"/>
+          <argument>userRegistered</argument>
         </argument>
         <argument>33</argument>
       </call>
@@ -4526,7 +4530,7 @@
     </service>
     <service id="security.firewall.map.config.api" class="Symfony\Bundle\SecurityBundle\Security\FirewallConfig" public="false">
       <argument>api</argument>
-      <argument>security.user_checker</argument>
+      <argument>App\Security\UserEnabledChecker</argument>
       <argument>.security.request_matcher.p4VlLPC</argument>
       <argument>true</argument>
       <argument>true</argument>
@@ -4561,7 +4565,7 @@
       </argument>
       <argument type="service" id="security.user.provider.concrete.databse"/>
       <argument>api</argument>
-      <argument type="service" id="security.user_checker"/>
+      <argument type="service" id="App\Security\UserEnabledChecker"/>
       <argument type="service" id="security.user_password_encoder.generic"/>
     </service>
     <service id="security.authentication.listener.guard.api" class="Symfony\Component\Security\Guard\Firewall\GuardAuthenticationListener" public="false">
@@ -4576,7 +4580,7 @@
     </service>
     <service id="security.authentication.provider.dao.api" class="Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider" public="false">
       <argument type="service" id="security.user.provider.concrete.databse"/>
-      <argument type="service" id="security.user_checker"/>
+      <argument type="service" id="App\Security\UserEnabledChecker"/>
       <argument>api</argument>
       <argument type="service" id="security.encoder_factory.generic"/>
       <argument>true</argument>
@@ -5845,10 +5849,10 @@
     <service id=".abstract.instanceof.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\EventDispatcher\EventSubscriberInterface.0.App\EventSubscriber\AuthoredEntitySubscriber" class="App\EventSubscriber\AuthoredEntitySubscriber" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\EventSubscriber\AuthoredEntitySubscriber" class="App\EventSubscriber\AuthoredEntitySubscriber" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Component\EventDispatcher\EventSubscriberInterface.0.App\EventSubscriber\PasswordHashSubscriber" class="App\EventSubscriber\PasswordHashSubscriber" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\EventSubscriber\PasswordHashSubscriber" class="App\EventSubscriber\PasswordHashSubscriber" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\EventDispatcher\EventSubscriberInterface.0.App\EventSubscriber\PublishDateEntitySubscriber" class="App\EventSubscriber\PublishDateEntitySubscriber" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\EventSubscriber\PublishDateEntitySubscriber" class="App\EventSubscriber\PublishDateEntitySubscriber" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\EventDispatcher\EventSubscriberInterface.0.App\EventSubscriber\UserRegisteredSubscriber" class="App\EventSubscriber\UserRegisteredSubscriber" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\EventSubscriber\UserRegisteredSubscriber" class="App\EventSubscriber\UserRegisteredSubscriber" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\BlogPostRepository" class="App\Repository\BlogPostRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\BlogPostRepository" class="App\Repository\BlogPostRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\CommentRepository" class="App\Repository\CommentRepository" autowire="true" abstract="true"/>
@@ -6928,8 +6932,7 @@
     <service id="security.user_providers" alias="security.user.provider.concrete.databse" public="false"/>
     <service id="Symfony\Component\Security\Core\User\UserProviderInterface" alias="security.user.provider.concrete.databse"/>
     <service id="security.authentication.session_strategy.api" alias="security.authentication.session_strategy_noop"/>
-    <service id="security.user_checker.api" alias="security.user_checker" public="false"/>
-    <service id="Symfony\Component\Security\Core\User\UserCheckerInterface" alias="security.user_checker" public="false"/>
+    <service id="security.user_checker.api" alias="App\Security\UserEnabledChecker" public="false"/>
     <service id="api_platform.serializer" alias="serializer"/>
     <service id="api_platform.property_accessor" alias="property_accessor" public="false"/>
     <service id="api_platform.property_info" alias="property_info" public="false"/>

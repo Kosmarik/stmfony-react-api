@@ -199,6 +199,18 @@ return [[
 '%5B%5BC%5DApp%5CEntity%5CUser%23getOldPassword%5D%5B1%5D' => 2,
 '%5BApp%5CEntity%5CUser%23setOldPassword%5D%5B1%5D' => 1,
 '%5B%5BC%5DApp%5CEntity%5CUser%23setOldPassword%5D%5B1%5D' => 2,
+'%5BApp%5CEntity%5CUser%23getPasswordChangeDate%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CEntity%5CUser%23getPasswordChangeDate%5D%5B1%5D' => 2,
+'%5BApp%5CEntity%5CUser%23setPasswordChangeDate%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CEntity%5CUser%23setPasswordChangeDate%5D%5B1%5D' => 2,
+'%5BApp%5CEntity%5CUser%23getEnabled%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CEntity%5CUser%23getEnabled%5D%5B1%5D' => 2,
+'%5BApp%5CEntity%5CUser%23setEnabled%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CEntity%5CUser%23setEnabled%5D%5B1%5D' => 2,
+'%5BApp%5CEntity%5CUser%23getConfirmationToken%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CEntity%5CUser%23getConfirmationToken%5D%5B1%5D' => 2,
+'%5BApp%5CEntity%5CUser%23setConfirmationToken%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CEntity%5CUser%23setConfirmationToken%5D%5B1%5D' => 2,
 '%5BApp%5CEntity%5CUser%24id%5D%5B1%5D' => 26,
 '%5B%5BC%5DApp%5CEntity%5CUser%24id%5D%5B1%5D' => 2,
 '%5BApp%5CEntity%5CUser%24username%5D%5B1%5D' => 27,
@@ -223,6 +235,12 @@ return [[
 '%5B%5BC%5DApp%5CEntity%5CUser%24comments%5D%5B1%5D' => 2,
 '%5BApp%5CEntity%5CUser%24roles%5D%5B1%5D' => 37,
 '%5B%5BC%5DApp%5CEntity%5CUser%24roles%5D%5B1%5D' => 2,
+'%5BApp%5CEntity%5CUser%24passwordChangeDate%5D%5B1%5D' => 38,
+'%5B%5BC%5DApp%5CEntity%5CUser%24passwordChangeDate%5D%5B1%5D' => 2,
+'%5BApp%5CEntity%5CUser%24enabled%5D%5B1%5D' => 39,
+'%5B%5BC%5DApp%5CEntity%5CUser%24enabled%5D%5B1%5D' => 2,
+'%5BApp%5CEntity%5CUser%24confirmationToken%5D%5B1%5D' => 40,
+'%5B%5BC%5DApp%5CEntity%5CUser%24confirmationToken%5D%5B1%5D' => 2,
 '%5BDoctrine%5CBundle%5CDoctrineBundle%5CController%5CProfilerController%5D%5B1%5D' => 1,
 '%5B%5BC%5DDoctrine%5CBundle%5CDoctrineBundle%5CController%5CProfilerController%5D%5B1%5D' => 2,
 '%5BDoctrine%5CBundle%5CDoctrineBundle%5CController%5CProfilerController%23setContainer%5D%5B1%5D' => 1,
@@ -773,7 +791,7 @@ return [[
 '%5B%5BC%5DEasyCorp%5CBundle%5CEasyAdminBundle%5CController%5CAbstractDashboardController%5D%5B1%5D' => 2,
 '%5BEasyCorp%5CBundle%5CEasyAdminBundle%5CController%5CAbstractDashboardController%23getSubscribedServices%5D%5B1%5D' => 1,
 '%5B%5BC%5DEasyCorp%5CBundle%5CEasyAdminBundle%5CController%5CAbstractDashboardController%23getSubscribedServices%5D%5B1%5D' => 2,
-'%5BEasyCorp%5CBundle%5CEasyAdminBundle%5CController%5CAbstractDashboardController%23index%5D%5B1%5D' => 38,
+'%5BEasyCorp%5CBundle%5CEasyAdminBundle%5CController%5CAbstractDashboardController%23index%5D%5B1%5D' => 41,
 '%5B%5BC%5DEasyCorp%5CBundle%5CEasyAdminBundle%5CController%5CAbstractDashboardController%23index%5D%5B1%5D' => 2,
 '%5BEasyCorp%5CBundle%5CEasyAdminBundle%5CController%5CAbstractDashboardController%23configureDashboard%5D%5B1%5D' => 1,
 '%5B%5BC%5DEasyCorp%5CBundle%5CEasyAdminBundle%5CController%5CAbstractDashboardController%23configureDashboard%5D%5B1%5D' => 2,
@@ -836,7 +854,7 @@ return [[
 
 0 => 'N;',
 1 => [],
-2 => 1605220298,
+2 => 1605272614,
 3 => static function () {
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
@@ -1862,10 +1880,10 @@ return [[
             'stdClass' => [
                 'groups' => [
                     1 => [
-                        'Default',
+                        'put-reset-password',
                     ],
                     [
-                        'Default',
+                        'put-reset-password',
                     ],
                 ],
                 'message' => [
@@ -1903,17 +1921,17 @@ return [[
             'stdClass' => [
                 'groups' => [
                     1 => [
-                        'Default',
+                        'put-reset-password',
                     ],
                     [
-                        'Default',
+                        'put-reset-password',
                     ],
                 ],
                 'message' => [
                     2 => 'Password does now match',
                 ],
                 'expression' => [
-                    2 => 'this.getPassword() === this.getRetypedPassword()',
+                    2 => 'this.getNewPassword() === this.getNewRetypedPassword()',
                 ],
             ],
         ],
@@ -1944,10 +1962,10 @@ return [[
             'stdClass' => [
                 'groups' => [
                     1 => [
-                        'Default',
+                        'put-reset-password',
                     ],
                     [
-                        'Default',
+                        'put-reset-password',
                     ],
                 ],
             ],
@@ -2162,6 +2180,69 @@ return [[
     );
 },
 38 => static function () {
+    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+        $o = [
+            clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),
+        ],
+        null,
+        [
+            'stdClass' => [
+                'type' => [
+                    'integer',
+                ],
+                'nullable' => [
+                    true,
+                ],
+            ],
+        ],
+        [
+            $o[0],
+        ],
+        []
+    );
+},
+39 => static function () {
+    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+        $o = [
+            clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),
+        ],
+        null,
+        [
+            'stdClass' => [
+                'type' => [
+                    'boolean',
+                ],
+            ],
+        ],
+        [
+            $o[0],
+        ],
+        []
+    );
+},
+40 => static function () {
+    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+        $o = [
+            clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),
+        ],
+        null,
+        [
+            'stdClass' => [
+                'length' => [
+                    40,
+                ],
+                'nullable' => [
+                    true,
+                ],
+            ],
+        ],
+        [
+            $o[0],
+        ],
+        []
+    );
+},
+41 => static function () {
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
             clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
