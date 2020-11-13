@@ -414,6 +414,11 @@
     <service id="App\EventSubscriber\PublishDateEntitySubscriber" class="App\EventSubscriber\PublishDateEntitySubscriber" autowire="true" autoconfigure="true">
       <tag name="kernel.event_subscriber"/>
     </service>
+    <service id="App\EventSubscriber\UserConfirmationSubscriber" class="App\EventSubscriber\UserConfirmationSubscriber" autowire="true" autoconfigure="true">
+      <tag name="kernel.event_subscriber"/>
+      <argument type="service" id="App\Repository\UserRepository"/>
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+    </service>
     <service id="App\EventSubscriber\UserRegisteredSubscriber" class="App\EventSubscriber\UserRegisteredSubscriber" autowire="true" autoconfigure="true">
       <tag name="kernel.event_subscriber"/>
       <argument type="service" id="security.user_password_encoder.generic"/>
@@ -2276,6 +2281,14 @@
           <argument>setDatePublished</argument>
         </argument>
         <argument>33</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.view</argument>
+        <argument type="collection">
+          <argument type="service" id="App\EventSubscriber\UserConfirmationSubscriber"/>
+          <argument>confirmUser</argument>
+        </argument>
+        <argument>63</argument>
       </call>
       <call method="addListener">
         <argument>kernel.view</argument>
@@ -5851,6 +5864,8 @@
     <service id=".abstract.instanceof.App\EventSubscriber\AuthoredEntitySubscriber" class="App\EventSubscriber\AuthoredEntitySubscriber" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\EventDispatcher\EventSubscriberInterface.0.App\EventSubscriber\PublishDateEntitySubscriber" class="App\EventSubscriber\PublishDateEntitySubscriber" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\EventSubscriber\PublishDateEntitySubscriber" class="App\EventSubscriber\PublishDateEntitySubscriber" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\EventDispatcher\EventSubscriberInterface.0.App\EventSubscriber\UserConfirmationSubscriber" class="App\EventSubscriber\UserConfirmationSubscriber" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\EventSubscriber\UserConfirmationSubscriber" class="App\EventSubscriber\UserConfirmationSubscriber" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\EventDispatcher\EventSubscriberInterface.0.App\EventSubscriber\UserRegisteredSubscriber" class="App\EventSubscriber\UserRegisteredSubscriber" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\EventSubscriber\UserRegisteredSubscriber" class="App\EventSubscriber\UserRegisteredSubscriber" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\BlogPostRepository" class="App\Repository\BlogPostRepository" autowire="true" abstract="true"/>

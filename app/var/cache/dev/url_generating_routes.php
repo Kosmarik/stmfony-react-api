@@ -26,5 +26,6 @@ return [
     'api_users_get_item' => [['id', '_format'], ['_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'get'], [], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '[^/\\.]++', 'id', true], ['text', '/api/users']], [], []],
     'api_users_put_item' => [['id', '_format'], ['_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'put'], [], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '[^/\\.]++', 'id', true], ['text', '/api/users']], [], []],
     'api_users_put-reset-password_item' => [['id'], ['_controller' => 'App\\Controller\\ResetPasswordAction', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'put-reset-password'], [], [['text', '/reset-password'], ['variable', '/', '[^/]++', 'id', true], ['text', '/api/users']], [], []],
+    'api_user_confirmations_post_collection' => [[], ['_controller' => 'api_platform.action.post_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\UserConfirmation', '_api_collection_operation_name' => 'post'], [], [['text', '/api/users/confirm']], [], []],
     'api_login_check' => [[], [], [], [['text', '/api/login_check']], [], []],
 ];
