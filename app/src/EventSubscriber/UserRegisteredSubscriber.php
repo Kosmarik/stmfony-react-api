@@ -13,16 +13,19 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserRegisteredSubscriber implements EventSubscriberInterface
 {
     private $passwordEncoder;
-
     private $tokenGenerator;
+    private $mailer;
+
 
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
-        TokenGenerator $tokenGenerator
+        TokenGenerator $tokenGenerator,
+        \Swift_Mailer $mailer
     )
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->tokenGenerator = $tokenGenerator;
+        $this->mailer = $mailer;
     }
 
     public static function getSubscribedEvents()
@@ -42,7 +45,7 @@ class UserRegisteredSubscriber implements EventSubscriberInterface
             return;
         }
 
-        //It is an User , we need to hash password here
+        //It is an User , we need to hash password here.
         $user->setPassword(
             $this->passwordEncoder->encodePassword($user, $user->getPassword())
         );
@@ -51,5 +54,13 @@ class UserRegisteredSubscriber implements EventSubscriberInterface
         $user->setConfirmationToken(
             $this->tokenGenerator->getRandomSecureToken()
         );
+
+        // Send email here.
+        $message = (new \Swift_Message("Hello from Api PLATFORM!"))
+            ->setFrom("alfred.ivasko1996@gmail.com")
+            ->setTo("alfred.ivasko1996@gmail.com")
+            ->setBody("Hello, how are you?");
+
+        $this->mailer->send($message);
     }
 }

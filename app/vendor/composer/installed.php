@@ -200,6 +200,15 @@
       ),
       'reference' => '1894c5901fd7d2b57c399f9a06c8b51422034949',
     ),
+    'egulias/email-validator' => 
+    array (
+      'pretty_version' => '2.1.23',
+      'version' => '2.1.23.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '5fa792ad1853ae2bc60528dd3e5cbf4542d3c1df',
+    ),
     'fig/link-util' => 
     array (
       'pretty_version' => '1.1.1',
@@ -435,6 +444,15 @@
       array (
       ),
       'reference' => '430d14c01836b77c28092883d195a43ce413ee32',
+    ),
+    'swiftmailer/swiftmailer' => 
+    array (
+      'pretty_version' => 'v6.2.3',
+      'version' => '6.2.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '149cfdf118b169f7840bbe3ef0d4bc795d1780c9',
     ),
     'symfony/asset' => 
     array (
@@ -698,6 +716,15 @@
       ),
       'reference' => 'c44d5bf6a75eed79555c6bf37505c6d39559353e',
     ),
+    'symfony/polyfill-intl-idn' => 
+    array (
+      'pretty_version' => 'v1.20.0',
+      'version' => '1.20.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '3b75acd829741c768bc8b1f84eb33265e7cc5117',
+    ),
     'symfony/polyfill-intl-normalizer' => 
     array (
       'pretty_version' => 'v1.20.0',
@@ -885,6 +912,15 @@
       array (
       ),
       'reference' => 'a97573e960303db71be0dd8fda9be3bca5e0feea',
+    ),
+    'symfony/swiftmailer-bundle' => 
+    array (
+      'pretty_version' => 'v3.5.1',
+      'version' => '3.5.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '933be6a3196fb354615290f53ff7ff61e0bdde58',
     ),
     'symfony/translation' => 
     array (

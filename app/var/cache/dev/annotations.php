@@ -77,6 +77,24 @@ return [[
 '%5B%5BC%5DApp%5CController%5CDefaultController%5D%5B1%5D' => 2,
 '%5BApp%5CController%5CDefaultController%23index%5D%5B1%5D' => 10,
 '%5B%5BC%5DApp%5CController%5CDefaultController%23index%5D%5B1%5D' => 2,
+'%5BApp%5CController%5CResetPasswordAction%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CController%5CResetPasswordAction%5D%5B1%5D' => 2,
+'%5BApp%5CController%5CResetPasswordAction%23__construct%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CController%5CResetPasswordAction%23__construct%5D%5B1%5D' => 2,
+'%5BApp%5CController%5CResetPasswordAction%23__invoke%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CController%5CResetPasswordAction%23__invoke%5D%5B1%5D' => 2,
+'%5BApp%5CController%5CResetPasswordAction%24validator%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CController%5CResetPasswordAction%24validator%5D%5B1%5D' => 2,
+'%5BApp%5CController%5CResetPasswordAction%24userPasswordEncoder%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CController%5CResetPasswordAction%24userPasswordEncoder%5D%5B1%5D' => 2,
+'%5BApp%5CController%5CResetPasswordAction%24entityManager%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CController%5CResetPasswordAction%24entityManager%5D%5B1%5D' => 2,
+'%5BApp%5CController%5CResetPasswordAction%24tokenManager%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CController%5CResetPasswordAction%24tokenManager%5D%5B1%5D' => 2,
+'%5BApp%5CEntity%5CAuthoredEntityInterface%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CEntity%5CAuthoredEntityInterface%5D%5B1%5D' => 2,
+'%5BApp%5CEntity%5CAuthoredEntityInterface%23setAuthor%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CEntity%5CAuthoredEntityInterface%23setAuthor%5D%5B1%5D' => 2,
 '%5BApp%5CEntity%5CBlogPost%5D%5B1%5D' => 11,
 '%5B%5BC%5DApp%5CEntity%5CBlogPost%5D%5B1%5D' => 2,
 '%5BApp%5CEntity%5CBlogPost%23__construct%5D%5B1%5D' => 1,
@@ -149,6 +167,10 @@ return [[
 '%5B%5BC%5DApp%5CEntity%5CComment%24author%5D%5B1%5D' => 2,
 '%5BApp%5CEntity%5CComment%24blogPost%5D%5B1%5D' => 24,
 '%5B%5BC%5DApp%5CEntity%5CComment%24blogPost%5D%5B1%5D' => 2,
+'%5BApp%5CEntity%5CPublishedDateEntityInterface%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CEntity%5CPublishedDateEntityInterface%5D%5B1%5D' => 2,
+'%5BApp%5CEntity%5CPublishedDateEntityInterface%23setPublished%5D%5B1%5D' => 1,
+'%5B%5BC%5DApp%5CEntity%5CPublishedDateEntityInterface%23setPublished%5D%5B1%5D' => 2,
 '%5BApp%5CEntity%5CUser%5D%5B1%5D' => 25,
 '%5B%5BC%5DApp%5CEntity%5CUser%5D%5B1%5D' => 2,
 '%5BApp%5CEntity%5CUser%23__construct%5D%5B1%5D' => 1,
@@ -241,6 +263,10 @@ return [[
 '%5B%5BC%5DApp%5CEntity%5CUser%24enabled%5D%5B1%5D' => 2,
 '%5BApp%5CEntity%5CUser%24confirmationToken%5D%5B1%5D' => 40,
 '%5B%5BC%5DApp%5CEntity%5CUser%24confirmationToken%5D%5B1%5D' => 2,
+'%5BApp%5CEntity%5CUserConfirmation%5D%5B1%5D' => 41,
+'%5B%5BC%5DApp%5CEntity%5CUserConfirmation%5D%5B1%5D' => 2,
+'%5BApp%5CEntity%5CUserConfirmation%24confirmationToken%5D%5B1%5D' => 42,
+'%5B%5BC%5DApp%5CEntity%5CUserConfirmation%24confirmationToken%5D%5B1%5D' => 2,
 '%5BDoctrine%5CBundle%5CDoctrineBundle%5CController%5CProfilerController%5D%5B1%5D' => 1,
 '%5B%5BC%5DDoctrine%5CBundle%5CDoctrineBundle%5CController%5CProfilerController%5D%5B1%5D' => 2,
 '%5BDoctrine%5CBundle%5CDoctrineBundle%5CController%5CProfilerController%23setContainer%5D%5B1%5D' => 1,
@@ -791,7 +817,7 @@ return [[
 '%5B%5BC%5DEasyCorp%5CBundle%5CEasyAdminBundle%5CController%5CAbstractDashboardController%5D%5B1%5D' => 2,
 '%5BEasyCorp%5CBundle%5CEasyAdminBundle%5CController%5CAbstractDashboardController%23getSubscribedServices%5D%5B1%5D' => 1,
 '%5B%5BC%5DEasyCorp%5CBundle%5CEasyAdminBundle%5CController%5CAbstractDashboardController%23getSubscribedServices%5D%5B1%5D' => 2,
-'%5BEasyCorp%5CBundle%5CEasyAdminBundle%5CController%5CAbstractDashboardController%23index%5D%5B1%5D' => 41,
+'%5BEasyCorp%5CBundle%5CEasyAdminBundle%5CController%5CAbstractDashboardController%23index%5D%5B1%5D' => 43,
 '%5B%5BC%5DEasyCorp%5CBundle%5CEasyAdminBundle%5CController%5CAbstractDashboardController%23index%5D%5B1%5D' => 2,
 '%5BEasyCorp%5CBundle%5CEasyAdminBundle%5CController%5CAbstractDashboardController%23configureDashboard%5D%5B1%5D' => 1,
 '%5B%5BC%5DEasyCorp%5CBundle%5CEasyAdminBundle%5CController%5CAbstractDashboardController%23configureDashboard%5D%5B1%5D' => 2,
@@ -854,7 +880,7 @@ return [[
 
 0 => 'N;',
 1 => [],
-2 => 1605272614,
+2 => 1605312653,
 3 => static function () {
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
@@ -2243,6 +2269,64 @@ return [[
     );
 },
 41 => static function () {
+    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+        $o = [
+            clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['ApiPlatform\\Core\\Annotation\\ApiResource'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Core\\Annotation\\ApiResource')),
+        ],
+        null,
+        [
+            'stdClass' => [
+                'collectionOperations' => [
+                    [
+                        'post' => [
+                            'path' => '/users/confirm',
+                        ],
+                    ],
+                ],
+                'itemOperations' => [
+                    [],
+                ],
+            ],
+        ],
+        [
+            $o[0],
+        ],
+        []
+    );
+},
+42 => static function () {
+    return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+        $o = [
+            clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Validator\\Constraints\\NotBlank'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Validator\\Constraints\\NotBlank')),
+            clone ($p['Symfony\\Component\\Validator\\Constraints\\Length'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Validator\\Constraints\\Length')),
+        ],
+        null,
+        [
+            'stdClass' => [
+                'groups' => [
+                    [
+                        'Default',
+                    ],
+                    [
+                        'Default',
+                    ],
+                ],
+                'max' => [
+                    1 => 30,
+                ],
+                'min' => [
+                    1 => 30,
+                ],
+            ],
+        ],
+        [
+            $o[0],
+            $o[1],
+        ],
+        []
+    );
+},
+43 => static function () {
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
             clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
