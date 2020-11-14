@@ -425,6 +425,10 @@
       <argument type="service" id="security.user_password_encoder.generic"/>
       <argument type="service" id="App\Security\TokenGenerator"/>
     </service>
+    <service id="App\Email\Mailer" class="App\Email\Mailer" autowire="true" autoconfigure="true">
+      <argument type="service" id="swiftmailer.mailer.default"/>
+      <argument type="service" id="twig"/>
+    </service>
     <service id="App\EventSubscriber\AuthoredEntitySubscriber" class="App\EventSubscriber\AuthoredEntitySubscriber" autowire="true" autoconfigure="true">
       <tag name="kernel.event_subscriber"/>
       <argument type="service" id="security.token_storage"/>
@@ -434,14 +438,13 @@
     </service>
     <service id="App\EventSubscriber\UserConfirmationSubscriber" class="App\EventSubscriber\UserConfirmationSubscriber" autowire="true" autoconfigure="true">
       <tag name="kernel.event_subscriber"/>
-      <argument type="service" id="App\Repository\UserRepository"/>
-      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+      <argument type="service" id="App\Security\UserConfirmationService"/>
     </service>
     <service id="App\EventSubscriber\UserRegisteredSubscriber" class="App\EventSubscriber\UserRegisteredSubscriber" autowire="true" autoconfigure="true">
       <tag name="kernel.event_subscriber"/>
       <argument type="service" id="security.user_password_encoder.generic"/>
       <argument type="service" id="App\Security\TokenGenerator"/>
-      <argument type="service" id="swiftmailer.mailer.default"/>
+      <argument type="service" id="App\Email\Mailer"/>
     </service>
     <service id="App\Repository\BlogPostRepository" class="App\Repository\BlogPostRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
@@ -462,6 +465,10 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="App\Security\TokenGenerator" class="App\Security\TokenGenerator" autowire="true" autoconfigure="true"/>
+    <service id="App\Security\UserConfirmationService" class="App\Security\UserConfirmationService" autowire="true" autoconfigure="true">
+      <argument type="service" id="App\Repository\UserRepository"/>
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+    </service>
     <service id="App\Security\UserEnabledChecker" class="App\Security\UserEnabledChecker" autowire="true" autoconfigure="true"/>
     <service id="App\Serializer\UserAttributeNormalizer" class="App\Serializer\UserAttributeNormalizer" autowire="true" autoconfigure="true">
       <tag name="serializer.normalizer" priority="64"/>
@@ -6379,18 +6386,25 @@
         <argument key="post" type="service" id=".errored..service_locator.G5AQjsF.App\Entity\BlogPost"/>
       </argument>
     </service>
+    <service id=".service_locator.5pawbol" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="userConfirmationService" type="service" id="App\Security\UserConfirmationService"/>
+      </argument>
+    </service>
     <service id=".service_locator.93Qi50q" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="data" type="service" id=".errored..service_locator.93Qi50q.App\Entity\User"/>
       </argument>
     </service>
-    <service id=".service_locator.Fijwxfs" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.fZfgTum" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\BlogController::delete" type="service" id=".service_locator.G5AQjsF"/>
         <argument key="App\Controller\BlogController::post" type="service" id=".service_locator.G5AQjsF"/>
         <argument key="App\Controller\BlogController::postBySlug" type="service" id=".service_locator.G5AQjsF"/>
+        <argument key="App\Controller\DefaultController::confirmUser" type="service" id=".service_locator.5pawbol"/>
         <argument key="App\Controller\ResetPasswordAction::__invoke" type="service" id=".service_locator.93Qi50q"/>
         <argument key="App\Kernel::loadRoutes" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service" id=".service_locator.C9JCBPC"/>
@@ -6401,6 +6415,7 @@
         <argument key="App\Controller\BlogController:delete" type="service" id=".service_locator.G5AQjsF"/>
         <argument key="App\Controller\BlogController:post" type="service" id=".service_locator.G5AQjsF"/>
         <argument key="App\Controller\BlogController:postBySlug" type="service" id=".service_locator.G5AQjsF"/>
+        <argument key="App\Controller\DefaultController:confirmUser" type="service" id=".service_locator.5pawbol"/>
         <argument key="App\Controller\ResetPasswordAction:__invoke" type="service" id=".service_locator.93Qi50q"/>
         <argument key="App\Controller\ResetPasswordAction" type="service" id=".service_locator.93Qi50q"/>
         <argument key="kernel:loadRoutes" type="service" id=".service_locator.C9JCBPC"/>
@@ -6754,12 +6769,12 @@
       <argument type="service" id="EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.Fijwxfs"/>
+      <argument type="service" id=".service_locator.fZfgTum"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver" public="false">
-      <argument type="service" id=".service_locator.Fijwxfs"/>
+      <argument type="service" id=".service_locator.fZfgTum"/>
     </service>
     <service id="api_platform.swagger.normalizer.api_gateway.inner" class="ApiPlatform\Core\Swagger\Serializer\DocumentationNormalizer" public="false">
       <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
@@ -7208,7 +7223,7 @@
     <service id="mailer" alias="swiftmailer.mailer.default" public="true"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.WaGDpDt" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.Fijwxfs"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.fZfgTum"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="api_platform.name_converter" alias="serializer.name_converter.metadata_aware"/>
     <service id="Psr\Log\LoggerInterface" alias="logger" public="false"/>

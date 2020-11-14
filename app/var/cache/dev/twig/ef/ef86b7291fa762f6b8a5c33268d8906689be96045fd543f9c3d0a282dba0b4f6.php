@@ -59,9 +59,11 @@ class __TwigTemplate_0b3e12fffd2fd7757b1920959e74d435a9ea574c2bc8b993c01324dc5c0
         // line 9
         $this->displayBlock('body', $context, $blocks);
         // line 10
-        echo "        ";
-        $this->displayBlock('javascripts', $context, $blocks);
+        echo "        This is a default site of your project
+        ";
         // line 11
+        $this->displayBlock('javascripts', $context, $blocks);
+        // line 12
         echo "    </body>
 </html>
 ";
@@ -107,7 +109,7 @@ class __TwigTemplate_0b3e12fffd2fd7757b1920959e74d435a9ea574c2bc8b993c01324dc5c0
 
     }
 
-    // line 10
+    // line 11
     public function block_javascripts($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -126,7 +128,7 @@ class __TwigTemplate_0b3e12fffd2fd7757b1920959e74d435a9ea574c2bc8b993c01324dc5c0
 
     public function getDebugInfo()
     {
-        return array (  111 => 10,  99 => 9,  87 => 6,  74 => 5,  65 => 11,  62 => 10,  60 => 9,  56 => 7,  54 => 6,  50 => 5,  44 => 1,);
+        return array (  113 => 11,  101 => 9,  89 => 6,  76 => 5,  67 => 12,  65 => 11,  62 => 10,  60 => 9,  56 => 7,  54 => 6,  50 => 5,  44 => 1,);
     }
 
     public function getSourceContext()
@@ -140,6 +142,7 @@ class __TwigTemplate_0b3e12fffd2fd7757b1920959e74d435a9ea574c2bc8b993c01324dc5c0
     </head>
     <body>
         {% block body %}{% endblock %}
+        This is a default site of your project
         {% block javascripts %}{% endblock %}
     </body>
 </html>

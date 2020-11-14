@@ -935,6 +935,15 @@ private static $installed = array (
       ),
       'reference' => '933be6a3196fb354615290f53ff7ff61e0bdde58',
     ),
+    'symfony/templating' => 
+    array (
+      'pretty_version' => 'v5.1.8',
+      'version' => '5.1.8.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '42fb44375553828eee4fa12bd255579b9ccfc871',
+    ),
     'symfony/translation' => 
     array (
       'pretty_version' => 'v5.1.8',

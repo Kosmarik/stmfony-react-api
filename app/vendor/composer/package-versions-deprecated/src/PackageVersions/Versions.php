@@ -117,6 +117,7 @@ final class Versions
   'symfony/stopwatch' => 'v5.1.8@3d9f57c89011f0266e6b1d469e5c0110513859d5',
   'symfony/string' => 'v5.1.8@a97573e960303db71be0dd8fda9be3bca5e0feea',
   'symfony/swiftmailer-bundle' => 'v3.5.1@933be6a3196fb354615290f53ff7ff61e0bdde58',
+  'symfony/templating' => 'v5.1.8@42fb44375553828eee4fa12bd255579b9ccfc871',
   'symfony/translation' => 'v5.1.8@27980838fd261e04379fa91e94e81e662fe5a1b6',
   'symfony/translation-contracts' => 'v2.3.0@e2eaa60b558f26a4b0354e1bbb25636efaaad105',
   'symfony/twig-bridge' => 'v5.1.8@874735a8c97963af2009e0eaee55b17fc0846db2',
