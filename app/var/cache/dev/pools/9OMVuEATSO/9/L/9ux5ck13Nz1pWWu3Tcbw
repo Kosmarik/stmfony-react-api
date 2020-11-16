@@ -148,7 +148,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     'order' => [
                         'published' => 'DESC',
                     ],
-                    'maximum_items_per_page' => 7,
+                    'maximum_items_per_page' => 30,
                     'denormalization_context' => [
                         'groups' => [
                             'post',

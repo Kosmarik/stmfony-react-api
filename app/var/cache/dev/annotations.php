@@ -922,7 +922,7 @@ return [[
 
 0 => 'N;',
 1 => [],
-2 => 1605558594,
+2 => 1605566174,
 3 => static function () {
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
@@ -1237,6 +1237,7 @@ return [[
                         'order' => [
                             'published' => 'DESC',
                         ],
+                        'maximum_items_per_page' => 30,
                         'denormalization_context' => [
                             'groups' => [
                                 'post',
@@ -1588,6 +1589,8 @@ return [[
                         'order' => [
                             'published' => 'DESC',
                         ],
+                        'pagination_client_enabled' => true,
+                        'pagination_client_items_per_page' => true,
                         'denormalization_context' => [
                             'groups' => [
                                 'post',
