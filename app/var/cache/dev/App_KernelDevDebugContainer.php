@@ -16,6 +16,6 @@ if (!\class_exists(App_KernelDevDebugContainer::class, false)) {
 
 return new \ContainerEPwDbUX\App_KernelDevDebugContainer([
     'container.build_hash' => 'EPwDbUX',
-    'container.build_id' => '3d60a357',
-    'container.build_time' => 1605566127,
+    'container.build_id' => 'a7b95af2',
+    'container.build_time' => 1605566607,
 ], __DIR__.\DIRECTORY_SEPARATOR.'ContainerEPwDbUX');

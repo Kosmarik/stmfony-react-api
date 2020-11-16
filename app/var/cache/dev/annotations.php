@@ -886,43 +886,43 @@ return [[
 '%5BSymfony%5CComponent%5CSecurity%5CHttp%5CController%5CUserValueResolver%24tokenStorage%5D%5B1%5D' => 1,
 '%5B%5BC%5DSymfony%5CComponent%5CSecurity%5CHttp%5CController%5CUserValueResolver%24tokenStorage%5D%5B1%5D' => 2,
 '%5BVich%5CUploaderBundle%5CEntity%5CFile%5D%5B1%5D' => 46,
-'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%5D%5B1%5D' => 2,
+'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%5D%5B1%5D' => 47,
 '%5BVich%5CUploaderBundle%5CEntity%5CFile%23getName%5D%5B1%5D' => 1,
-'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23getName%5D%5B1%5D' => 2,
+'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23getName%5D%5B1%5D' => 47,
 '%5BVich%5CUploaderBundle%5CEntity%5CFile%23setName%5D%5B1%5D' => 1,
-'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23setName%5D%5B1%5D' => 2,
+'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23setName%5D%5B1%5D' => 47,
 '%5BVich%5CUploaderBundle%5CEntity%5CFile%23getOriginalName%5D%5B1%5D' => 1,
-'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23getOriginalName%5D%5B1%5D' => 2,
+'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23getOriginalName%5D%5B1%5D' => 47,
 '%5BVich%5CUploaderBundle%5CEntity%5CFile%23setOriginalName%5D%5B1%5D' => 1,
-'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23setOriginalName%5D%5B1%5D' => 2,
+'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23setOriginalName%5D%5B1%5D' => 47,
 '%5BVich%5CUploaderBundle%5CEntity%5CFile%23getMimeType%5D%5B1%5D' => 1,
-'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23getMimeType%5D%5B1%5D' => 2,
+'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23getMimeType%5D%5B1%5D' => 47,
 '%5BVich%5CUploaderBundle%5CEntity%5CFile%23setMimeType%5D%5B1%5D' => 1,
-'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23setMimeType%5D%5B1%5D' => 2,
+'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23setMimeType%5D%5B1%5D' => 47,
 '%5BVich%5CUploaderBundle%5CEntity%5CFile%23getSize%5D%5B1%5D' => 1,
-'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23getSize%5D%5B1%5D' => 2,
+'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23getSize%5D%5B1%5D' => 47,
 '%5BVich%5CUploaderBundle%5CEntity%5CFile%23setSize%5D%5B1%5D' => 1,
-'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23setSize%5D%5B1%5D' => 2,
+'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23setSize%5D%5B1%5D' => 47,
 '%5BVich%5CUploaderBundle%5CEntity%5CFile%23getDimensions%5D%5B1%5D' => 1,
-'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23getDimensions%5D%5B1%5D' => 2,
+'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23getDimensions%5D%5B1%5D' => 47,
 '%5BVich%5CUploaderBundle%5CEntity%5CFile%23setDimensions%5D%5B1%5D' => 1,
-'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23setDimensions%5D%5B1%5D' => 2,
-'%5BVich%5CUploaderBundle%5CEntity%5CFile%24name%5D%5B1%5D' => 47,
-'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%24name%5D%5B1%5D' => 2,
-'%5BVich%5CUploaderBundle%5CEntity%5CFile%24originalName%5D%5B1%5D' => 48,
-'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%24originalName%5D%5B1%5D' => 2,
-'%5BVich%5CUploaderBundle%5CEntity%5CFile%24mimeType%5D%5B1%5D' => 49,
-'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%24mimeType%5D%5B1%5D' => 2,
-'%5BVich%5CUploaderBundle%5CEntity%5CFile%24size%5D%5B1%5D' => 50,
-'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%24size%5D%5B1%5D' => 2,
-'%5BVich%5CUploaderBundle%5CEntity%5CFile%24dimensions%5D%5B1%5D' => 51,
-'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%24dimensions%5D%5B1%5D' => 2,
+'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%23setDimensions%5D%5B1%5D' => 47,
+'%5BVich%5CUploaderBundle%5CEntity%5CFile%24name%5D%5B1%5D' => 48,
+'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%24name%5D%5B1%5D' => 47,
+'%5BVich%5CUploaderBundle%5CEntity%5CFile%24originalName%5D%5B1%5D' => 49,
+'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%24originalName%5D%5B1%5D' => 47,
+'%5BVich%5CUploaderBundle%5CEntity%5CFile%24mimeType%5D%5B1%5D' => 50,
+'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%24mimeType%5D%5B1%5D' => 47,
+'%5BVich%5CUploaderBundle%5CEntity%5CFile%24size%5D%5B1%5D' => 51,
+'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%24size%5D%5B1%5D' => 47,
+'%5BVich%5CUploaderBundle%5CEntity%5CFile%24dimensions%5D%5B1%5D' => 52,
+'%5B%5BC%5DVich%5CUploaderBundle%5CEntity%5CFile%24dimensions%5D%5B1%5D' => 47,
 
 ], [
 
 0 => 'N;',
 1 => [],
-2 => 1605566174,
+2 => 1605566479,
 3 => static function () {
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
@@ -1813,6 +1813,9 @@ return [[
                                     'user_read',
                                 ],
                             ],
+                            'validation_groups' => [
+                                'post',
+                            ],
                         ],
                     ],
                 ],
@@ -1848,6 +1851,9 @@ return [[
                                 'groups' => [
                                     'put-reset-password',
                                 ],
+                            ],
+                            'validation_groups' => [
+                                'post',
                             ],
                         ],
                     ],
@@ -2517,7 +2523,8 @@ return [[
         []
     );
 },
-47 => static function () {
+47 => 1605566480,
+48 => static function () {
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
             clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),
@@ -2539,7 +2546,7 @@ return [[
         []
     );
 },
-48 => static function () {
+49 => static function () {
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
             clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),
@@ -2561,7 +2568,7 @@ return [[
         []
     );
 },
-49 => static function () {
+50 => static function () {
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
             clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),
@@ -2583,7 +2590,7 @@ return [[
         []
     );
 },
-50 => static function () {
+51 => static function () {
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
             clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),
@@ -2608,7 +2615,7 @@ return [[
         []
     );
 },
-51 => static function () {
+52 => static function () {
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
             clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),

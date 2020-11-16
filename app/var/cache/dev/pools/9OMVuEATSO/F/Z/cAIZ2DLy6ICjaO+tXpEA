@@ -96,6 +96,9 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                                 'put-reset-password',
                             ],
                         ],
+                        'validation_groups' => [
+                            'post',
+                        ],
                         'input' => null,
                         'output' => null,
                         'input_formats' => [
@@ -135,6 +138,9 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                             'groups' => [
                                 'user_read',
                             ],
+                        ],
+                        'validation_groups' => [
+                            'post',
                         ],
                         'input' => null,
                         'output' => null,
