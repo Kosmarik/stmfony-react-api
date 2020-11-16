@@ -52,14 +52,21 @@ return [
                                 .'|([^/]++)/comments(?:\\.([^/]++))?(*:452)'
                             .')'
                         .')'
+                        .'|images(?'
+                            .'|(?:\\.([^/]++))?(*:486)'
+                            .'|(*:494)'
+                            .'|/([^/\\.]++)(?:\\.([^/]++))?(?'
+                                .'|(*:531)'
+                            .')'
+                        .')'
                         .'|users(?'
-                            .'|(?:\\.([^/]++))?(*:485)'
+                            .'|(?:\\.([^/]++))?(*:564)'
                             .'|/(?'
                                 .'|([^/\\.]++)(?:\\.([^/]++))?(?'
-                                    .'|(*:525)'
+                                    .'|(*:604)'
                                 .')'
-                                .'|([^/]++)/reset\\-password(*:558)'
-                                .'|confirm(*:573)'
+                                .'|([^/]++)/reset\\-password(*:637)'
+                                .'|confirm(*:652)'
                             .')'
                         .')'
                     .')'
@@ -93,13 +100,21 @@ return [
             [['_route' => 'api_blog_posts_put_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\BlogPost', '_api_item_operation_name' => 'put'], ['id', '_format'], ['PUT' => 0], null, false, true, null],
         ],
         452 => [[['_route' => 'api_blog_posts_comments_get_subresource', '_controller' => 'api_platform.action.get_subresource', '_format' => null, '_api_resource_class' => 'App\\Entity\\Comment', '_api_subresource_operation_name' => 'api_blog_posts_comments_get_subresource', '_api_subresource_context' => ['property' => 'comments', 'identifiers' => [['id', 'App\\Entity\\BlogPost', true]], 'collection' => true, 'operationId' => 'api_blog_posts_comments_get_subresource']], ['id', '_format'], ['GET' => 0], null, false, true, null]],
-        485 => [[['_route' => 'api_users_post_collection', '_controller' => 'api_platform.action.post_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_collection_operation_name' => 'post'], ['_format'], ['POST' => 0], null, false, true, null]],
-        525 => [
+        486 => [[['_route' => 'api_images_get_collection', '_controller' => 'api_platform.action.get_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\Image', '_api_collection_operation_name' => 'get'], ['_format'], ['GET' => 0], null, false, true, null]],
+        494 => [[['_route' => 'api_images_post_collection', '_controller' => 'App\\Controller\\UploadImageAction', '_format' => null, '_api_resource_class' => 'App\\Entity\\Image', '_api_collection_operation_name' => 'post', '_api_receive' => false], [], ['POST' => 0], null, false, false, null]],
+        531 => [
+            [['_route' => 'api_images_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Image', '_api_item_operation_name' => 'get'], ['id', '_format'], ['GET' => 0], null, false, true, null],
+            [['_route' => 'api_images_delete_item', '_controller' => 'api_platform.action.delete_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Image', '_api_item_operation_name' => 'delete'], ['id', '_format'], ['DELETE' => 0], null, false, true, null],
+            [['_route' => 'api_images_put_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Image', '_api_item_operation_name' => 'put'], ['id', '_format'], ['PUT' => 0], null, false, true, null],
+            [['_route' => 'api_images_patch_item', '_controller' => 'api_platform.action.patch_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Image', '_api_item_operation_name' => 'patch'], ['id', '_format'], ['PATCH' => 0], null, false, true, null],
+        ],
+        564 => [[['_route' => 'api_users_post_collection', '_controller' => 'api_platform.action.post_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_collection_operation_name' => 'post'], ['_format'], ['POST' => 0], null, false, true, null]],
+        604 => [
             [['_route' => 'api_users_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'get'], ['id', '_format'], ['GET' => 0], null, false, true, null],
             [['_route' => 'api_users_put_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'put'], ['id', '_format'], ['PUT' => 0], null, false, true, null],
         ],
-        558 => [[['_route' => 'api_users_put-reset-password_item', '_controller' => 'App\\Controller\\ResetPasswordAction', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'put-reset-password'], ['id'], ['PUT' => 0], null, false, false, null]],
-        573 => [
+        637 => [[['_route' => 'api_users_put-reset-password_item', '_controller' => 'App\\Controller\\ResetPasswordAction', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'put-reset-password'], ['id'], ['PUT' => 0], null, false, false, null]],
+        652 => [
             [['_route' => 'api_user_confirmations_post_collection', '_controller' => 'api_platform.action.post_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\UserConfirmation', '_api_collection_operation_name' => 'post'], [], ['POST' => 0], null, false, false, null],
             [null, null, null, null, false, false, 0],
         ],
