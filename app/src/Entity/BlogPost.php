@@ -16,6 +16,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 
 /**
  * @ORM\Entity(repositoryClass=BlogPostRepository::class)
@@ -25,7 +26,16 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *         "id": "exact",
  *         "title": "partial",
  *         "content": "partial",
- *         "author": "exact"
+ *         "author": "exact",
+ *         "author.name": "partial"
+ *     }
+ * )
+ * @ApiFilter(
+ *     PropertyFilter::class,
+ *     arguments={
+ *         "parameterName": "properties",
+ *         "overrideDefaultProperties": false,
+ *         "whitelist": {"id", "author", "slug", "title", "content"}
  *     }
  * )
  * @ApiFilter(
