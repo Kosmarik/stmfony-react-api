@@ -922,7 +922,7 @@ return [[
 
 0 => 'N;',
 1 => [],
-2 => 1605529676,
+2 => 1605558594,
 3 => static function () {
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
@@ -1154,6 +1154,11 @@ return [[
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
             clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\Entity'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Entity')),
+            clone ($p['ApiPlatform\\Core\\Annotation\\ApiFilter'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Core\\Annotation\\ApiFilter')),
+            clone $p['ApiPlatform\\Core\\Annotation\\ApiFilter'],
+            clone $p['ApiPlatform\\Core\\Annotation\\ApiFilter'],
+            clone $p['ApiPlatform\\Core\\Annotation\\ApiFilter'],
+            clone $p['ApiPlatform\\Core\\Annotation\\ApiFilter'],
             clone ($p['ApiPlatform\\Core\\Annotation\\ApiResource'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Core\\Annotation\\ApiResource')),
         ],
         null,
@@ -1162,8 +1167,51 @@ return [[
                 'repositoryClass' => [
                     'App\\Repository\\BlogPostRepository',
                 ],
-                'collectionOperations' => [
+                'filterClass' => [
+                    1 => 'ApiPlatform\\Core\\Bridge\\Doctrine\\Orm\\Filter\\SearchFilter',
+                    'ApiPlatform\\Core\\Serializer\\Filter\\PropertyFilter',
+                    'ApiPlatform\\Core\\Bridge\\Doctrine\\Orm\\Filter\\DateFilter',
+                    'ApiPlatform\\Core\\Bridge\\Doctrine\\Orm\\Filter\\RangeFilter',
+                    'ApiPlatform\\Core\\Bridge\\Doctrine\\Orm\\Filter\\OrderFilter',
+                ],
+                'properties' => [
                     1 => [
+                        'id' => 'exact',
+                        'title' => 'partial',
+                        'content' => 'partial',
+                        'author' => 'exact',
+                        'author.name' => 'partial',
+                    ],
+                    3 => [
+                        'published',
+                    ],
+                    [
+                        'id',
+                    ],
+                    [
+                        'id',
+                        'published',
+                        'title',
+                    ],
+                ],
+                'arguments' => [
+                    2 => [
+                        'parameterName' => 'properties',
+                        'overrideDefaultProperties' => false,
+                        'whitelist' => [
+                            'id',
+                            'author',
+                            'slug',
+                            'title',
+                            'content',
+                        ],
+                    ],
+                    5 => [
+                        'orderParameterName' => '_order',
+                    ],
+                ],
+                'collectionOperations' => [
+                    6 => [
                         'get',
                         'post' => [
                             'access_control' => 'is_granted(\'ROLE_WRITER\')',
@@ -1171,7 +1219,7 @@ return [[
                     ],
                 ],
                 'itemOperations' => [
-                    1 => [
+                    6 => [
                         'get' => [
                             'normalization_context' => [
                                 'groups' => [
@@ -1185,7 +1233,10 @@ return [[
                     ],
                 ],
                 'attributes' => [
-                    1 => [
+                    6 => [
+                        'order' => [
+                            'published' => 'DESC',
+                        ],
                         'denormalization_context' => [
                             'groups' => [
                                 'post',
@@ -1198,6 +1249,11 @@ return [[
         [
             $o[0],
             $o[1],
+            $o[2],
+            $o[3],
+            $o[4],
+            $o[5],
+            $o[6],
         ],
         []
     );
@@ -1529,6 +1585,9 @@ return [[
                 ],
                 'attributes' => [
                     [
+                        'order' => [
+                            'published' => 'DESC',
+                        ],
                         'denormalization_context' => [
                             'groups' => [
                                 'post',

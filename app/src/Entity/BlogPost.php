@@ -55,7 +55,7 @@ use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
  *     arguments={"orderParameterName"="_order"}
  * )
  * @ApiResource(
- *     attributes={"order"={"published": "DESC"}},
+ *     attributes={"order"={"published": "DESC"}, "maximum_items_per_page"=30},
  *     itemOperations={
  *         "get"={
  *              "normalization_context"={"groups"={"get-blog-with-author"}}
