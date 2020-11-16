@@ -27,4 +27,30 @@ return [PHP_INT_MAX, [
         'condition' => '',
         'controller' => null,
     ],
+    'api_blog_posts_images_get_subresource' => [
+        'property' => 'images',
+        'collection' => true,
+        'resource_class' => 'App\\Entity\\Image',
+        'shortNames' => [
+            'Image',
+            'BlogPost',
+        ],
+        'identifiers' => [
+            [
+                'id',
+                'App\\Entity\\BlogPost',
+                true,
+            ],
+        ],
+        'operation_name' => 'images_get_subresource',
+        'route_name' => 'api_blog_posts_images_get_subresource',
+        'path' => '/blog_posts/{id}/images.{_format}',
+        'defaults' => [],
+        'requirements' => [],
+        'options' => [],
+        'host' => '',
+        'schemes' => [],
+        'condition' => '',
+        'controller' => null,
+    ],
 ]];

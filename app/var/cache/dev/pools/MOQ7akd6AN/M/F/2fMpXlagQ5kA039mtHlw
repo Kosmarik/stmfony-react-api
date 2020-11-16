@@ -10,6 +10,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
     ],
     null,
     [
@@ -23,6 +24,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 'author',
                 'slug',
                 'comments',
+                'images',
             ],
             'attributesMetadata' => [
                 [
@@ -33,6 +35,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     'author' => $o[5],
                     'slug' => $o[6],
                     'comments' => $o[7],
+                    'images' => $o[8],
                 ],
             ],
             'groups' => [
@@ -58,6 +61,10 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     'get-blog-with-author',
                 ],
                 [
+                    'get-blog-with-author',
+                ],
+                [
+                    'post',
                     'get-blog-with-author',
                 ],
             ],
