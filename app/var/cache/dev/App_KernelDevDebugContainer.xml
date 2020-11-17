@@ -282,6 +282,7 @@
     <parameter key="api_platform.show_webby">true</parameter>
     <parameter key="api_platform.exception_to_status" type="collection">
       <parameter key="App\Exception\EmptyBodyException">400</parameter>
+      <parameter key="App\Exception\InvalidConfirmationTokenException">404</parameter>
     </parameter>
     <parameter key="api_platform.formats" type="collection">
       <parameter key="jsonld" type="collection">
@@ -479,6 +480,7 @@
       <argument type="service" id="App\Email\Mailer"/>
     </service>
     <service id="App\Exception\EmptyBodyException" class="App\Exception\EmptyBodyException" autowire="true" autoconfigure="true"/>
+    <service id="App\Exception\InvalidConfirmationTokenException" class="App\Exception\InvalidConfirmationTokenException" autowire="true" autoconfigure="true"/>
     <service id="App\Form\ImageType" class="App\Form\ImageType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>

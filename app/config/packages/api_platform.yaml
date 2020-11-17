@@ -14,3 +14,4 @@ api_platform:
                 maximum_items_per_page: 30
     exception_to_status:
         App\Exception\EmptyBodyException: 400
+        App\Exception\InvalidConfirmationTokenException: 404
