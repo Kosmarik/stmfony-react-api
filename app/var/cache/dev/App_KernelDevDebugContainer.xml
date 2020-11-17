@@ -246,6 +246,7 @@
     <parameter key="security.firewalls" type="collection">
       <parameter>dev</parameter>
       <parameter>api</parameter>
+      <parameter>admin</parameter>
     </parameter>
     <parameter key="easyadmin.config" type="collection"/>
     <parameter key="nelmio_cors.map" type="collection">
@@ -432,6 +433,7 @@
         <parameter key="type">exclusive</parameter>
         <parameter key="elements" type="collection">
           <parameter>event</parameter>
+          <parameter>token_confirmation</parameter>
         </parameter>
       </parameter>
       <parameter key="monolog.handler.token_confirmation" type="collection">
@@ -451,6 +453,37 @@
     <service id="kernel" class="App\Kernel" public="true" synthetic="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="routing.route_loader"/>
+    </service>
+    <service id="App\Controller\Admin\BlogPostCrudController" class="App\Controller\Admin\BlogPostCrudController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="ea.crud_controller"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.laElj3_.App\Controller\Admin\BlogPostCrudController"/>
+      </call>
+    </service>
+    <service id="App\Controller\Admin\DashboardController" class="App\Controller\Admin\DashboardController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="ea.dashboard_controller"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.4kZ4HNI.App\Controller\Admin\DashboardController"/>
+      </call>
+    </service>
+    <service id="App\Controller\Admin\ImageCrudController" class="App\Controller\Admin\ImageCrudController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="ea.crud_controller"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.laElj3_.App\Controller\Admin\ImageCrudController"/>
+      </call>
+    </service>
+    <service id="App\Controller\AdminSecurityController" class="App\Controller\AdminSecurityController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.g9CqTPp.App\Controller\AdminSecurityController"/>
+      </call>
     </service>
     <service id="App\Controller\BlogController" class="App\Controller\BlogController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
@@ -4376,10 +4409,11 @@
       <argument type="service" id="security.role_hierarchy" on-invalid="null"/>
     </service>
     <service id="security.firewall.map" class="Symfony\Bundle\SecurityBundle\Security\FirewallMap" public="false">
-      <argument type="service" id=".service_locator.WD7fNT9"/>
+      <argument type="service" id=".service_locator.2TTcYyA"/>
       <argument type="iterator">
         <argument key="security.firewall.map.context.dev" type="service" id=".security.request_matcher.Iy.T22O"/>
         <argument key="security.firewall.map.context.api" type="service" id=".security.request_matcher.p4VlLPC"/>
+        <argument key="security.firewall.map.context.admin" type="service" id=".security.request_matcher.3UEFixr"/>
       </argument>
     </service>
     <service id="security.firewall.context" class="Symfony\Bundle\SecurityBundle\Security\FirewallContext" public="false" abstract="true">
@@ -4413,6 +4447,14 @@
       <argument type="service" id="request_stack" on-invalid="null"/>
       <argument type="service" id="router.default" on-invalid="null"/>
       <argument type="service" id="security.token_storage"/>
+      <call method="registerListener">
+        <argument>admin</argument>
+        <argument>security_logout</argument>
+        <argument>logout</argument>
+        <argument>_csrf_token</argument>
+        <argument>null</argument>
+        <argument>null</argument>
+      </call>
     </service>
     <service id="security.user.provider.missing" class="Symfony\Component\Security\Core\User\MissingUserProvider" public="false" abstract="true">
       <argument></argument>
@@ -4481,6 +4523,20 @@
     <service id="security.access_map" class="Symfony\Component\Security\Http\AccessMap" public="false">
       <call method="add">
         <argument type="service" id=".security.request_matcher.cRNYaJ1"/>
+        <argument type="collection">
+          <argument>IS_AUTHENTICATED_ANONYMOUSLY</argument>
+        </argument>
+        <argument>null</argument>
+      </call>
+      <call method="add">
+        <argument type="service" id=".security.request_matcher.5dJADCx"/>
+        <argument type="collection">
+          <argument>ROLE_SUPERADMIN</argument>
+        </argument>
+        <argument>null</argument>
+      </call>
+      <call method="add">
+        <argument type="service" id=".security.request_matcher.QWkwKV5"/>
         <argument type="collection">
           <argument>IS_AUTHENTICATED_ANONYMOUSLY</argument>
         </argument>
@@ -4700,6 +4756,8 @@
         <argument type="service" id="security.authentication.provider.guard.api"/>
         <argument type="service" id="security.authentication.provider.dao.api"/>
         <argument type="service" id="security.authentication.provider.anonymous.api"/>
+        <argument type="service" id="security.authentication.provider.dao.admin"/>
+        <argument type="service" id="security.authentication.provider.anonymous.admin"/>
       </argument>
       <argument>true</argument>
       <call method="setEventDispatcher">
@@ -4913,15 +4971,200 @@
       <argument>null</argument>
       <argument type="service" id="security.firewall.map.config.api"/>
     </service>
-    <service id=".service_locator.WD7fNT9" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id="security.firewall.map.config.admin" class="Symfony\Bundle\SecurityBundle\Security\FirewallConfig" public="false">
+      <argument>admin</argument>
+      <argument>security.user_checker</argument>
+      <argument>.security.request_matcher.3UEFixr</argument>
+      <argument>true</argument>
+      <argument>false</argument>
+      <argument>security.user.provider.concrete.databse</argument>
+      <argument>admin</argument>
+      <argument>security.authentication.form_entry_point.admin</argument>
+      <argument>null</argument>
+      <argument>null</argument>
+      <argument type="collection">
+        <argument>form_login</argument>
+        <argument>anonymous</argument>
+      </argument>
+      <argument>null</argument>
+    </service>
+    <service id=".security.request_matcher.3UEFixr" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
+      <argument>^/</argument>
+    </service>
+    <service id="security.event_dispatcher.admin" class="Symfony\Component\EventDispatcher\EventDispatcher">
+      <call method="addListener">
+        <argument>Symfony\Component\Security\Http\Event\LogoutEvent</argument>
+        <argument type="collection">
+          <argument type="service" id="security.logout.listener.default.admin"/>
+          <argument>onLogout</argument>
+        </argument>
+        <argument>64</argument>
+      </call>
+      <call method="addListener">
+        <argument>Symfony\Component\Security\Http\Event\LogoutEvent</argument>
+        <argument type="collection">
+          <argument type="service" id="security.logout.listener.session.admin"/>
+          <argument>onLogout</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>Symfony\Component\Security\Http\Event\LogoutEvent</argument>
+        <argument type="collection">
+          <argument type="service" id="security.logout.listener.csrf_token_clearing"/>
+          <argument>onLogout</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+    </service>
+    <service id="security.context_listener.0" class="Symfony\Component\Security\Http\Firewall\ContextListener" public="false">
+      <argument type="service" id="security.untracked_token_storage"/>
+      <argument type="iterator">
+        <argument type="service" id="security.user.provider.concrete.databse"/>
+      </argument>
+      <argument>admin</argument>
+      <argument type="service" id="monolog.logger.security" on-invalid="null"/>
+      <argument type="service" id="debug.event_dispatcher" on-invalid="null"/>
+      <argument type="service" id="security.authentication.trust_resolver"/>
+      <argument type="collection">
+        <argument type="service" id="security.token_storage"/>
+        <argument>enableUsageTracking</argument>
+      </argument>
+    </service>
+    <service id="security.logout_listener.admin" class="Symfony\Component\Security\Http\Firewall\LogoutListener" public="false">
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument type="service" id="security.event_dispatcher.admin"/>
+      <argument type="collection">
+        <argument key="csrf_parameter">_csrf_token</argument>
+        <argument key="csrf_token_id">logout</argument>
+        <argument key="logout_path">security_logout</argument>
+      </argument>
+    </service>
+    <service id="security.logout.listener.default.admin" class="Symfony\Component\Security\Http\EventListener\DefaultLogoutListener" public="false">
+      <tag name="kernel.event_subscriber" dispatcher="security.event_dispatcher.admin"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument>/</argument>
+    </service>
+    <service id="security.logout.listener.session.admin" class="Symfony\Component\Security\Http\EventListener\SessionLogoutListener" public="false">
+      <tag name="kernel.event_subscriber" dispatcher="security.event_dispatcher.admin"/>
+    </service>
+    <service id="security.authentication.provider.dao.admin" class="Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider" public="false">
+      <argument type="service" id="security.user.provider.concrete.databse"/>
+      <argument type="service" id="security.user_checker"/>
+      <argument>admin</argument>
+      <argument type="service" id="security.encoder_factory.generic"/>
+      <argument>true</argument>
+    </service>
+    <service id="security.authentication.success_handler.admin.form_login" class="Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler" public="false">
+      <argument type="service" id="security.http_utils"/>
+      <argument type="collection"/>
+      <call method="setOptions">
+        <argument type="collection">
+          <argument key="login_path">security_login</argument>
+          <argument key="default_target_path">admin</argument>
+          <argument key="use_referer">true</argument>
+          <argument key="always_use_default_target_path">false</argument>
+          <argument key="target_path_parameter">_target_path</argument>
+        </argument>
+      </call>
+      <call method="setProviderKey">
+        <argument>admin</argument>
+      </call>
+    </service>
+    <service id="security.authentication.failure_handler.admin.form_login" class="Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler" public="false">
+      <argument type="service" id="http_kernel"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument type="collection"/>
+      <argument type="service" id="monolog.logger.security" on-invalid="null"/>
+      <call method="setOptions">
+        <argument type="collection">
+          <argument key="login_path">security_login</argument>
+          <argument key="failure_path">null</argument>
+          <argument key="failure_forward">false</argument>
+          <argument key="failure_path_parameter">_failure_path</argument>
+        </argument>
+      </call>
+    </service>
+    <service id="security.authentication.listener.form.admin" class="Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener" public="false">
+      <tag name="security.remember_me_aware" id="admin" provider="security.user.provider.concrete.databse"/>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.authentication.manager"/>
+      <argument type="service" id="security.authentication.session_strategy"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument>admin</argument>
+      <argument type="service" id="security.authentication.success_handler.admin.form_login"/>
+      <argument type="service" id="security.authentication.failure_handler.admin.form_login"/>
+      <argument type="collection">
+        <argument key="check_path">security_login</argument>
+        <argument key="login_path">security_login</argument>
+        <argument key="use_forward">false</argument>
+        <argument key="require_previous_session">false</argument>
+        <argument key="username_parameter">_username</argument>
+        <argument key="password_parameter">_password</argument>
+        <argument key="csrf_parameter">_csrf_token</argument>
+        <argument key="csrf_token_id">authenticate</argument>
+        <argument key="enable_csrf">false</argument>
+        <argument key="post_only">true</argument>
+      </argument>
+      <argument type="service" id="monolog.logger.security" on-invalid="null"/>
+      <argument type="service" id="debug.event_dispatcher" on-invalid="null"/>
+      <argument>null</argument>
+    </service>
+    <service id="security.authentication.form_entry_point.admin" class="Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint" public="false">
+      <argument type="service" id="http_kernel"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument>security_login</argument>
+      <argument>false</argument>
+    </service>
+    <service id="security.authentication.listener.anonymous.admin" class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
+      <argument type="service" id="security.untracked_token_storage"/>
+      <argument>%container.build_hash%</argument>
+      <argument type="service" id="monolog.logger.security" on-invalid="null"/>
+      <argument type="service" id="security.authentication.manager"/>
+    </service>
+    <service id="security.authentication.provider.anonymous.admin" class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
+      <argument>%container.build_hash%</argument>
+    </service>
+    <service id="security.exception_listener.admin" class="Symfony\Component\Security\Http\Firewall\ExceptionListener" public="false">
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.authentication.trust_resolver"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument>admin</argument>
+      <argument type="service" id="security.authentication.form_entry_point.admin"/>
+      <argument>null</argument>
+      <argument>null</argument>
+      <argument type="service" id="monolog.logger.security" on-invalid="null"/>
+      <argument>false</argument>
+    </service>
+    <service id="security.firewall.map.context.admin" class="Symfony\Bundle\SecurityBundle\Security\FirewallContext" public="false">
+      <argument type="iterator">
+        <argument type="service" id="security.channel_listener"/>
+        <argument type="service" id="security.context_listener.0"/>
+        <argument type="service" id="security.authentication.listener.form.admin"/>
+        <argument type="service" id="security.authentication.listener.anonymous.admin"/>
+        <argument type="service" id="security.access_listener"/>
+      </argument>
+      <argument type="service" id="security.exception_listener.admin"/>
+      <argument type="service" id="security.logout_listener.admin"/>
+      <argument type="service" id="security.firewall.map.config.admin"/>
+    </service>
+    <service id=".service_locator.2TTcYyA" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="security.firewall.map.context.admin" type="service" id="security.firewall.map.context.admin"/>
         <argument key="security.firewall.map.context.api" type="service" id="security.firewall.map.context.api"/>
         <argument key="security.firewall.map.context.dev" type="service" id="security.firewall.map.context.dev"/>
       </argument>
     </service>
     <service id=".security.request_matcher.cRNYaJ1" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
       <argument>^/api</argument>
+    </service>
+    <service id=".security.request_matcher.5dJADCx" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
+      <argument>^/admin</argument>
+    </service>
+    <service id=".security.request_matcher.QWkwKV5" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
+      <argument>^/login</argument>
     </service>
     <service id="security.command.user_password_encoder" class="Symfony\Bundle\SecurityBundle\Command\UserPasswordEncoderCommand" public="false">
       <tag name="console.command" command="security:encode-password"/>
@@ -6582,6 +6825,21 @@
       </argument>
       <argument type="service" id="serializer.name_converter.metadata_aware" on-invalid="ignore"/>
     </service>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\Admin\BlogPostCrudController" class="App\Controller\Admin\BlogPostCrudController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Admin\BlogPostCrudController" class="App\Controller\Admin\BlogPostCrudController" autowire="true" abstract="true"/>
+    <service id=".instanceof.EasyCorp\Bundle\EasyAdminBundle\Contracts\Controller\CrudControllerInterface.0.App\Controller\Admin\BlogPostCrudController" class="App\Controller\Admin\BlogPostCrudController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\Admin\BlogPostCrudController" class="App\Controller\Admin\BlogPostCrudController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\Admin\DashboardController" class="App\Controller\Admin\DashboardController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Admin\DashboardController" class="App\Controller\Admin\DashboardController" autowire="true" abstract="true"/>
+    <service id=".instanceof.EasyCorp\Bundle\EasyAdminBundle\Contracts\Controller\DashboardControllerInterface.0.App\Controller\Admin\DashboardController" class="App\Controller\Admin\DashboardController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\Admin\DashboardController" class="App\Controller\Admin\DashboardController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\Admin\ImageCrudController" class="App\Controller\Admin\ImageCrudController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Admin\ImageCrudController" class="App\Controller\Admin\ImageCrudController" autowire="true" abstract="true"/>
+    <service id=".instanceof.EasyCorp\Bundle\EasyAdminBundle\Contracts\Controller\CrudControllerInterface.0.App\Controller\Admin\ImageCrudController" class="App\Controller\Admin\ImageCrudController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\Admin\ImageCrudController" class="App\Controller\Admin\ImageCrudController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\AdminSecurityController" class="App\Controller\AdminSecurityController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\AdminSecurityController" class="App\Controller\AdminSecurityController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\AdminSecurityController" class="App\Controller\AdminSecurityController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\BlogController" class="App\Controller\BlogController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\BlogController" class="App\Controller\BlogController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\BlogController" class="App\Controller\BlogController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -6931,6 +7189,71 @@
         <argument key="loader" type="service" id=".errored..service_locator.C9JCBPC.Symfony\Component\Config\Loader\LoaderInterface"/>
       </argument>
     </service>
+    <service id=".service_locator.qrcjTqq" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="crud" type="service" id=".errored..service_locator.qrcjTqq.EasyCorp\Bundle\EasyAdminBundle\Config\Crud"/>
+      </argument>
+    </service>
+    <service id=".service_locator.tcQaCCv" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="assets" type="service" id=".errored..service_locator.tcQaCCv.EasyCorp\Bundle\EasyAdminBundle\Config\Assets"/>
+      </argument>
+    </service>
+    <service id=".service_locator.9oHZTib" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="actions" type="service" id=".errored..service_locator.9oHZTib.EasyCorp\Bundle\EasyAdminBundle\Config\Actions"/>
+      </argument>
+    </service>
+    <service id=".service_locator.h8Ml21G" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="filters" type="service" id=".errored..service_locator.h8Ml21G.EasyCorp\Bundle\EasyAdminBundle\Config\Filters"/>
+      </argument>
+    </service>
+    <service id=".service_locator.coGsai3" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="context" type="service" id=".errored..service_locator.coGsai3.EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext"/>
+      </argument>
+    </service>
+    <service id=".service_locator.PFJgvwM" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="entityDto" type="service" id=".errored..service_locator.PFJgvwM.EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto"/>
+        <argument key="fields" type="service" id=".errored..service_locator.PFJgvwM.EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection"/>
+        <argument key="filters" type="service" id=".errored..service_locator.PFJgvwM.EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection"/>
+        <argument key="searchDto" type="service" id=".errored..service_locator.PFJgvwM.EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto"/>
+      </argument>
+    </service>
+    <service id=".service_locator._nRHRBM" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="entityManager" type="service" id="doctrine.orm.default_entity_manager"/>
+      </argument>
+    </service>
+    <service id=".service_locator.mjs_CZr" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="context" type="service" id=".errored..service_locator.mjs_CZr.EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext"/>
+        <argument key="entityDto" type="service" id=".errored..service_locator.mjs_CZr.EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto"/>
+        <argument key="formOptions" type="service" id=".errored..service_locator.mjs_CZr.EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore"/>
+      </argument>
+    </service>
+    <service id=".service_locator.TpM2PZC" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="responseParameters" type="service" id=".errored..service_locator.TpM2PZC.EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore"/>
+      </argument>
+    </service>
+    <service id=".service_locator.fLx15ph" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="user" type="service" id=".errored..service_locator.fLx15ph.Symfony\Component\Security\Core\User\UserInterface"/>
+      </argument>
+    </service>
     <service id=".service_locator.G5AQjsF" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -6949,9 +7272,50 @@
         <argument key="data" type="service" id=".errored..service_locator.93Qi50q.App\Entity\User"/>
       </argument>
     </service>
-    <service id=".service_locator.fZfgTum" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.mP_bKNH" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="App\Controller\Admin\BlogPostCrudController::autocomplete" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::configureActions" type="service" id=".service_locator.9oHZTib"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::configureAssets" type="service" id=".service_locator.tcQaCCv"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::configureCrud" type="service" id=".service_locator.qrcjTqq"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::configureFilters" type="service" id=".service_locator.h8Ml21G"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::configureResponseParameters" type="service" id=".service_locator.TpM2PZC"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::createEditForm" type="service" id=".service_locator.mjs_CZr"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::createEditFormBuilder" type="service" id=".service_locator.mjs_CZr"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::createIndexQueryBuilder" type="service" id=".service_locator.PFJgvwM"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::createNewForm" type="service" id=".service_locator.mjs_CZr"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::createNewFormBuilder" type="service" id=".service_locator.mjs_CZr"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::delete" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::deleteEntity" type="service" id=".service_locator._nRHRBM"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::detail" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::edit" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::index" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::new" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::persistEntity" type="service" id=".service_locator._nRHRBM"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::renderFilters" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController::updateEntity" type="service" id=".service_locator._nRHRBM"/>
+        <argument key="App\Controller\Admin\DashboardController::configureUserMenu" type="service" id=".service_locator.fLx15ph"/>
+        <argument key="App\Controller\Admin\ImageCrudController::autocomplete" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\ImageCrudController::configureActions" type="service" id=".service_locator.9oHZTib"/>
+        <argument key="App\Controller\Admin\ImageCrudController::configureAssets" type="service" id=".service_locator.tcQaCCv"/>
+        <argument key="App\Controller\Admin\ImageCrudController::configureCrud" type="service" id=".service_locator.qrcjTqq"/>
+        <argument key="App\Controller\Admin\ImageCrudController::configureFilters" type="service" id=".service_locator.h8Ml21G"/>
+        <argument key="App\Controller\Admin\ImageCrudController::configureResponseParameters" type="service" id=".service_locator.TpM2PZC"/>
+        <argument key="App\Controller\Admin\ImageCrudController::createEditForm" type="service" id=".service_locator.mjs_CZr"/>
+        <argument key="App\Controller\Admin\ImageCrudController::createEditFormBuilder" type="service" id=".service_locator.mjs_CZr"/>
+        <argument key="App\Controller\Admin\ImageCrudController::createIndexQueryBuilder" type="service" id=".service_locator.PFJgvwM"/>
+        <argument key="App\Controller\Admin\ImageCrudController::createNewForm" type="service" id=".service_locator.mjs_CZr"/>
+        <argument key="App\Controller\Admin\ImageCrudController::createNewFormBuilder" type="service" id=".service_locator.mjs_CZr"/>
+        <argument key="App\Controller\Admin\ImageCrudController::delete" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\ImageCrudController::deleteEntity" type="service" id=".service_locator._nRHRBM"/>
+        <argument key="App\Controller\Admin\ImageCrudController::detail" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\ImageCrudController::edit" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\ImageCrudController::index" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\ImageCrudController::new" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\ImageCrudController::persistEntity" type="service" id=".service_locator._nRHRBM"/>
+        <argument key="App\Controller\Admin\ImageCrudController::renderFilters" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\ImageCrudController::updateEntity" type="service" id=".service_locator._nRHRBM"/>
         <argument key="App\Controller\BlogController::delete" type="service" id=".service_locator.G5AQjsF"/>
         <argument key="App\Controller\BlogController::post" type="service" id=".service_locator.G5AQjsF"/>
         <argument key="App\Controller\BlogController::postBySlug" type="service" id=".service_locator.G5AQjsF"/>
@@ -6963,6 +7327,47 @@
         <argument key="kernel::loadRoutes" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel::registerContainerConfiguration" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel::terminate" type="service" id=".service_locator.beq5mCo"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:autocomplete" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:configureActions" type="service" id=".service_locator.9oHZTib"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:configureAssets" type="service" id=".service_locator.tcQaCCv"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:configureCrud" type="service" id=".service_locator.qrcjTqq"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:configureFilters" type="service" id=".service_locator.h8Ml21G"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:configureResponseParameters" type="service" id=".service_locator.TpM2PZC"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:createEditForm" type="service" id=".service_locator.mjs_CZr"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:createEditFormBuilder" type="service" id=".service_locator.mjs_CZr"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:createIndexQueryBuilder" type="service" id=".service_locator.PFJgvwM"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:createNewForm" type="service" id=".service_locator.mjs_CZr"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:createNewFormBuilder" type="service" id=".service_locator.mjs_CZr"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:delete" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:deleteEntity" type="service" id=".service_locator._nRHRBM"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:detail" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:edit" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:index" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:new" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:persistEntity" type="service" id=".service_locator._nRHRBM"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:renderFilters" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\BlogPostCrudController:updateEntity" type="service" id=".service_locator._nRHRBM"/>
+        <argument key="App\Controller\Admin\DashboardController:configureUserMenu" type="service" id=".service_locator.fLx15ph"/>
+        <argument key="App\Controller\Admin\ImageCrudController:autocomplete" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\ImageCrudController:configureActions" type="service" id=".service_locator.9oHZTib"/>
+        <argument key="App\Controller\Admin\ImageCrudController:configureAssets" type="service" id=".service_locator.tcQaCCv"/>
+        <argument key="App\Controller\Admin\ImageCrudController:configureCrud" type="service" id=".service_locator.qrcjTqq"/>
+        <argument key="App\Controller\Admin\ImageCrudController:configureFilters" type="service" id=".service_locator.h8Ml21G"/>
+        <argument key="App\Controller\Admin\ImageCrudController:configureResponseParameters" type="service" id=".service_locator.TpM2PZC"/>
+        <argument key="App\Controller\Admin\ImageCrudController:createEditForm" type="service" id=".service_locator.mjs_CZr"/>
+        <argument key="App\Controller\Admin\ImageCrudController:createEditFormBuilder" type="service" id=".service_locator.mjs_CZr"/>
+        <argument key="App\Controller\Admin\ImageCrudController:createIndexQueryBuilder" type="service" id=".service_locator.PFJgvwM"/>
+        <argument key="App\Controller\Admin\ImageCrudController:createNewForm" type="service" id=".service_locator.mjs_CZr"/>
+        <argument key="App\Controller\Admin\ImageCrudController:createNewFormBuilder" type="service" id=".service_locator.mjs_CZr"/>
+        <argument key="App\Controller\Admin\ImageCrudController:delete" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\ImageCrudController:deleteEntity" type="service" id=".service_locator._nRHRBM"/>
+        <argument key="App\Controller\Admin\ImageCrudController:detail" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\ImageCrudController:edit" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\ImageCrudController:index" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\ImageCrudController:new" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\ImageCrudController:persistEntity" type="service" id=".service_locator._nRHRBM"/>
+        <argument key="App\Controller\Admin\ImageCrudController:renderFilters" type="service" id=".service_locator.coGsai3"/>
+        <argument key="App\Controller\Admin\ImageCrudController:updateEntity" type="service" id=".service_locator._nRHRBM"/>
         <argument key="App\Controller\BlogController:delete" type="service" id=".service_locator.G5AQjsF"/>
         <argument key="App\Controller\BlogController:post" type="service" id=".service_locator.G5AQjsF"/>
         <argument key="App\Controller\BlogController:postBySlug" type="service" id=".service_locator.G5AQjsF"/>
@@ -7093,11 +7498,16 @@
     <service id="EasyCorp\Bundle\EasyAdminBundle\Registry\DashboardControllerRegistry" class="EasyCorp\Bundle\EasyAdminBundle\Registry\DashboardControllerRegistry" public="false">
       <argument>%env(APP_SECRET)%</argument>
       <argument>/var/www/project/var/cache/dev</argument>
-      <argument type="collection"/>
+      <argument type="collection">
+        <argument>App\Controller\Admin\DashboardController</argument>
+      </argument>
     </service>
     <service id="EasyCorp\Bundle\EasyAdminBundle\Registry\CrudControllerRegistry" class="EasyCorp\Bundle\EasyAdminBundle\Registry\CrudControllerRegistry" public="false">
       <argument>%env(APP_SECRET)%</argument>
-      <argument type="collection"/>
+      <argument type="collection">
+        <argument>App\Controller\Admin\BlogPostCrudController</argument>
+        <argument>App\Controller\Admin\ImageCrudController</argument>
+      </argument>
     </service>
     <service id="monolog.logger.request" class="Symfony\Bridge\Monolog\Logger">
       <argument>request</argument>
@@ -7177,9 +7587,6 @@
         <argument type="service" id="monolog.handler.console"/>
       </call>
       <call method="pushHandler">
-        <argument type="service" id="monolog.handler.main"/>
-      </call>
-      <call method="pushHandler">
         <argument type="service" id="monolog.handler.token_confirmation"/>
       </call>
     </service>
@@ -7200,6 +7607,70 @@
         <argument key="translation.loader.yml" type="service" id="translation.loader.yml"/>
       </argument>
     </service>
+    <service id=".service_locator.laElj3_" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="EasyCorp\Bundle\EasyAdminBundle\Factory\ActionFactory" type="service" id="EasyCorp\Bundle\EasyAdminBundle\Factory\ActionFactory" on-invalid="ignore"/>
+        <argument key="EasyCorp\Bundle\EasyAdminBundle\Factory\EntityFactory" type="service" id="EasyCorp\Bundle\EasyAdminBundle\Factory\EntityFactory" on-invalid="ignore"/>
+        <argument key="EasyCorp\Bundle\EasyAdminBundle\Factory\FilterFactory" type="service" id="EasyCorp\Bundle\EasyAdminBundle\Factory\FilterFactory" on-invalid="ignore"/>
+        <argument key="EasyCorp\Bundle\EasyAdminBundle\Factory\FormFactory" type="service" id="EasyCorp\Bundle\EasyAdminBundle\Factory\FormFactory" on-invalid="ignore"/>
+        <argument key="EasyCorp\Bundle\EasyAdminBundle\Factory\PaginatorFactory" type="service" id="EasyCorp\Bundle\EasyAdminBundle\Factory\PaginatorFactory" on-invalid="ignore"/>
+        <argument key="EasyCorp\Bundle\EasyAdminBundle\Orm\EntityRepository" type="service" id="EasyCorp\Bundle\EasyAdminBundle\Orm\EntityRepository" on-invalid="ignore"/>
+        <argument key="EasyCorp\Bundle\EasyAdminBundle\Orm\EntityUpdater" type="service" id="EasyCorp\Bundle\EasyAdminBundle\Orm\EntityUpdater" on-invalid="ignore"/>
+        <argument key="EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider" type="service" id="EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider" on-invalid="ignore"/>
+        <argument key="EasyCorp\Bundle\EasyAdminBundle\Provider\FieldProvider" type="service" id="EasyCorp\Bundle\EasyAdminBundle\Provider\FieldProvider" on-invalid="ignore"/>
+        <argument key="EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator" type="service" id="EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator" on-invalid="ignore"/>
+        <argument key="doctrine" type="service" id="doctrine" on-invalid="ignore"/>
+        <argument key="event_dispatcher" type="service" id="debug.event_dispatcher" on-invalid="ignore"/>
+        <argument key="form.factory" type="service" id="form.factory" on-invalid="ignore"/>
+        <argument key="http_kernel" type="service" id="http_kernel" on-invalid="ignore"/>
+        <argument key="parameter_bag" type="service" id="parameter_bag" on-invalid="ignore"/>
+        <argument key="request_stack" type="service" id="request_stack" on-invalid="ignore"/>
+        <argument key="router" type="service" id="router.default" on-invalid="ignore"/>
+        <argument key="security.authorization_checker" type="service" id="security.authorization_checker" on-invalid="ignore"/>
+        <argument key="security.csrf.token_manager" type="service" id="security.csrf.token_manager" on-invalid="ignore"/>
+        <argument key="security.token_storage" type="service" id="security.token_storage" on-invalid="ignore"/>
+        <argument key="serializer" type="service" id="serializer" on-invalid="ignore"/>
+        <argument key="session" type="service" id="session" on-invalid="ignore"/>
+        <argument key="twig" type="service" id="twig" on-invalid="ignore"/>
+      </argument>
+    </service>
+    <service id=".service_locator.laElj3_.App\Controller\Admin\BlogPostCrudController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator_context" id="App\Controller\Admin\BlogPostCrudController"/>
+      <argument>App\Controller\Admin\BlogPostCrudController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.laElj3_" method="withContext"/>
+    </service>
+    <service id=".service_locator.4kZ4HNI" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator" type="service" id="EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator" on-invalid="ignore"/>
+        <argument key="doctrine" type="service" id="doctrine" on-invalid="ignore"/>
+        <argument key="form.factory" type="service" id="form.factory" on-invalid="ignore"/>
+        <argument key="http_kernel" type="service" id="http_kernel" on-invalid="ignore"/>
+        <argument key="parameter_bag" type="service" id="parameter_bag" on-invalid="ignore"/>
+        <argument key="request_stack" type="service" id="request_stack" on-invalid="ignore"/>
+        <argument key="router" type="service" id="router.default" on-invalid="ignore"/>
+        <argument key="security.authorization_checker" type="service" id="security.authorization_checker" on-invalid="ignore"/>
+        <argument key="security.csrf.token_manager" type="service" id="security.csrf.token_manager" on-invalid="ignore"/>
+        <argument key="security.token_storage" type="service" id="security.token_storage" on-invalid="ignore"/>
+        <argument key="serializer" type="service" id="serializer" on-invalid="ignore"/>
+        <argument key="session" type="service" id="session" on-invalid="ignore"/>
+        <argument key="twig" type="service" id="twig" on-invalid="ignore"/>
+      </argument>
+    </service>
+    <service id=".service_locator.4kZ4HNI.App\Controller\Admin\DashboardController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator_context" id="App\Controller\Admin\DashboardController"/>
+      <argument>App\Controller\Admin\DashboardController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.4kZ4HNI" method="withContext"/>
+    </service>
+    <service id=".service_locator.laElj3_.App\Controller\Admin\ImageCrudController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator_context" id="App\Controller\Admin\ImageCrudController"/>
+      <argument>App\Controller\Admin\ImageCrudController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.laElj3_" method="withContext"/>
+    </service>
     <service id=".service_locator.g9CqTPp" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -7216,6 +7687,12 @@
         <argument key="session" type="service" id="session" on-invalid="ignore"/>
         <argument key="twig" type="service" id="twig" on-invalid="ignore"/>
       </argument>
+    </service>
+    <service id=".service_locator.g9CqTPp.App\Controller\AdminSecurityController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator_context" id="App\Controller\AdminSecurityController"/>
+      <argument>App\Controller\AdminSecurityController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.g9CqTPp" method="withContext"/>
     </service>
     <service id=".service_locator.g9CqTPp.App\Controller\BlogController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator_context" id="App\Controller\BlogController"/>
@@ -7407,12 +7884,12 @@
       <argument type="service" id="EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.fZfgTum"/>
+      <argument type="service" id=".service_locator.mP_bKNH"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver" public="false">
-      <argument type="service" id=".service_locator.fZfgTum"/>
+      <argument type="service" id=".service_locator.mP_bKNH"/>
     </service>
     <service id="api_platform.swagger.normalizer.api_gateway.inner" class="ApiPlatform\Core\Swagger\Serializer\DocumentationNormalizer" public="false">
       <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
@@ -7453,6 +7930,20 @@
     </service>
     <service id=".errored..service_locator.beq5mCo.Symfony\Component\HttpFoundation\Response" class="Symfony\Component\HttpFoundation\Response"/>
     <service id=".errored..service_locator.C9JCBPC.Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface"/>
+    <service id=".errored..service_locator.qrcjTqq.EasyCorp\Bundle\EasyAdminBundle\Config\Crud" class="EasyCorp\Bundle\EasyAdminBundle\Config\Crud"/>
+    <service id=".errored..service_locator.tcQaCCv.EasyCorp\Bundle\EasyAdminBundle\Config\Assets" class="EasyCorp\Bundle\EasyAdminBundle\Config\Assets"/>
+    <service id=".errored..service_locator.9oHZTib.EasyCorp\Bundle\EasyAdminBundle\Config\Actions" class="EasyCorp\Bundle\EasyAdminBundle\Config\Actions"/>
+    <service id=".errored..service_locator.h8Ml21G.EasyCorp\Bundle\EasyAdminBundle\Config\Filters" class="EasyCorp\Bundle\EasyAdminBundle\Config\Filters"/>
+    <service id=".errored..service_locator.coGsai3.EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext" class="EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext"/>
+    <service id=".errored..service_locator.PFJgvwM.EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto" class="EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto"/>
+    <service id=".errored..service_locator.PFJgvwM.EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection" class="EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection"/>
+    <service id=".errored..service_locator.PFJgvwM.EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection" class="EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection"/>
+    <service id=".errored..service_locator.PFJgvwM.EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto" class="EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto"/>
+    <service id=".errored..service_locator.mjs_CZr.EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext" class="EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext"/>
+    <service id=".errored..service_locator.mjs_CZr.EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto" class="EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto"/>
+    <service id=".errored..service_locator.mjs_CZr.EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore" class="EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore"/>
+    <service id=".errored..service_locator.TpM2PZC.EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore" class="EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore"/>
+    <service id=".errored..service_locator.fLx15ph.Symfony\Component\Security\Core\User\UserInterface" class="Symfony\Component\Security\Core\User\UserInterface"/>
     <service id=".errored..service_locator.G5AQjsF.App\Entity\BlogPost" class="App\Entity\BlogPost"/>
     <service id=".errored..service_locator.93Qi50q.App\Entity\User" class="App\Entity\User"/>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
@@ -7789,6 +8280,8 @@
     <service id="Symfony\Component\Security\Core\User\UserProviderInterface" alias="security.user.provider.concrete.databse"/>
     <service id="security.authentication.session_strategy.api" alias="security.authentication.session_strategy_noop"/>
     <service id="security.user_checker.api" alias="App\Security\UserEnabledChecker" public="false"/>
+    <service id="security.authentication.session_strategy.admin" alias="security.authentication.session_strategy"/>
+    <service id="security.user_checker.admin" alias="security.user_checker" public="false"/>
     <service id="api_platform.serializer" alias="serializer"/>
     <service id="api_platform.property_accessor" alias="property_accessor" public="false"/>
     <service id="api_platform.property_info" alias="property_info" public="false"/>
@@ -7888,7 +8381,7 @@
     <service id="Psr\Log\LoggerInterface" alias="monolog.logger" public="false"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.WaGDpDt" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.fZfgTum"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.mP_bKNH"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="api_platform.name_converter" alias="serializer.name_converter.metadata_aware"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>

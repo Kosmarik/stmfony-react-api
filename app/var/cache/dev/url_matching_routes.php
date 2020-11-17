@@ -8,6 +8,9 @@
 return [
     false, // $matchHost
     [ // $staticRoutes
+        '/admin' => [[['_route' => 'admin', '_controller' => 'App\\Controller\\Admin\\DashboardController::index'], null, null, null, false, false, null]],
+        '/login' => [[['_route' => 'security_login', '_controller' => 'App\\Controller\\AdminSecurityController::login'], null, null, null, false, false, null]],
+        '/logout' => [[['_route' => 'security_logout', '_controller' => 'App\\Controller\\AdminSecurityController::logout'], null, null, null, false, false, null]],
         '/blog/add' => [[['_route' => 'blog_add', '_controller' => 'App\\Controller\\BlogController::add'], null, ['POST' => 0], null, false, false, null]],
         '/' => [[['_route' => 'default_index', '_controller' => 'App\\Controller\\DefaultController::index'], null, null, null, false, false, null]],
         '/api/login_check' => [[['_route' => 'api_login_check'], null, ['POST' => 0], null, false, false, null]],

@@ -4,6 +4,9 @@
 
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], []],
+    'admin' => [[], ['_controller' => 'App\\Controller\\Admin\\DashboardController::index'], [], [['text', '/admin']], [], []],
+    'security_login' => [[], ['_controller' => 'App\\Controller\\AdminSecurityController::login'], [], [['text', '/login']], [], []],
+    'security_logout' => [[], ['_controller' => 'App\\Controller\\AdminSecurityController::logout'], [], [['text', '/logout']], [], []],
     'blog_list' => [['page'], ['page' => 1, '_controller' => 'App\\Controller\\BlogController::blogList'], ['page' => '\\d+'], [['variable', '/', '\\d+', 'page', true], ['text', '/blog']], [], []],
     'blog_by_id' => [['id'], ['_controller' => 'App\\Controller\\BlogController::post'], ['id' => '\\d+'], [['variable', '/', '\\d+', 'id', true], ['text', '/blog/post']], [], []],
     'blog_by_slug' => [['slug'], ['_controller' => 'App\\Controller\\BlogController::postBySlug'], [], [['variable', '/', '[^/]++', 'slug', true], ['text', '/blog/post']], [], []],
