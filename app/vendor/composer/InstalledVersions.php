@@ -294,6 +294,15 @@ private static $installed = array (
       ),
       'reference' => '2c3448975c5560f4a29ac6f3bfc1fb24673609c0',
     ),
+    'monolog/monolog' => 
+    array (
+      'pretty_version' => '2.1.1',
+      'version' => '2.1.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'f9eee5cec93dfb313a38b6b288741e84e53f02d5',
+    ),
     'namshi/jose' => 
     array (
       'pretty_version' => '7.2.3',
@@ -449,6 +458,7 @@ private static $installed = array (
       'provided' => 
       array (
         0 => '1.0',
+        1 => '1.0.0',
       ),
     ),
     'psr/simple-cache-implementation' => 
@@ -705,6 +715,24 @@ private static $installed = array (
       array (
       ),
       'reference' => 'f5485a92c24d4bcfc2f3fc648744fb398482ff1b',
+    ),
+    'symfony/monolog-bridge' => 
+    array (
+      'pretty_version' => 'v5.1.8',
+      'version' => '5.1.8.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '0c507eddb704a3154b53f066cc0b587c4586c868',
+    ),
+    'symfony/monolog-bundle' => 
+    array (
+      'pretty_version' => 'v3.6.0',
+      'version' => '3.6.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'e495f5c7e4e672ffef4357d4a4d85f010802f940',
     ),
     'symfony/options-resolver' => 
     array (
