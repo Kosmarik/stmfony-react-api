@@ -444,8 +444,8 @@
     array (
       'provided' => 
       array (
-        0 => '1.0',
-        1 => '1.0.0',
+        0 => '1.0.0',
+        1 => '1.0',
       ),
     ),
     'psr/simple-cache-implementation' => 
@@ -729,6 +729,15 @@
       array (
       ),
       'reference' => 'c6a02905e4ffc7a1498e8ee019db2b477cd1cc02',
+    ),
+    'symfony/phpunit-bridge' => 
+    array (
+      'pretty_version' => 'v5.1.8',
+      'version' => '5.1.8.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '61744927348cd391ac12f7c6b70544991275845c',
     ),
     'symfony/polyfill-ctype' => 
     array (
